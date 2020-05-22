@@ -45,29 +45,22 @@ const allocateVector = (
     vector: Vector,
     heapIn: string,
 ) => {
-    const buffer = new ArrayBuffer(vector.length * heapMap[heapIn].BYTES_PER_ELEMENT);
-    const typedArray = new heapMap[heapIn](buffer);
-
-    for (let i = 0; i < typedArray.length; i++) {
-        typedArray[i] = vector[i];
-    }
-
-    const pointer = Module._malloc(typedArray.length * typedArray.BYTES_PER_ELEMENT);
+    const pointer = Module._malloc(vector.length * vector.BYTES_PER_ELEMENT);
 
     garbage.push(pointer);
 
     switch (heapIn) {
         case 'HEAP8': case 'HEAPU8':
-            Module[heapIn].set(typedArray, pointer)
+            Module[heapIn].set(vector, pointer)
             break
         case 'HEAP16': case 'HEAPU16':
-            Module[heapIn].set(typedArray, pointer >> 1)
+            Module[heapIn].set(vector, pointer >> 1)
             break
         case 'HEAP32': case 'HEAPU32': case 'HEAPF32':
-            Module[heapIn].set(typedArray, pointer >> 2)
+            Module[heapIn].set(vector, pointer >> 2)
             break
         case 'HEAPF64':
-            Module[heapIn].set(typedArray, pointer >> 3)
+            Module[heapIn].set(vector, pointer >> 3)
             break
     }
 
@@ -118,13 +111,8 @@ const prepareVectorReturnValue = (
     const [rows,] = returnShape;
     const heap = Module[heapOut];
     const offset = returnValue / heapMap[heapOut].BYTES_PER_ELEMENT;
-    const r = Array(rows);
 
-    for (let i = 0; i < rows; i++) {
-        r[i] = heap[offset + i];
-    }
-
-    return r;
+    return heap.slice(offset, offset + rows);
 }
 
 const prepareMatrixReturnValue = (
@@ -134,18 +122,17 @@ const prepareMatrixReturnValue = (
     heapOut: string
 ): Matrix => {
     const [rows, columns] = returnShape;
-    const returnData: Matrix = []
-
+    const matrix: Matrix = []
     const heap = Module.HEAPU32
     const offset = returnValue / heap.BYTES_PER_ELEMENT;
 
     for (let i = 0; i < rows; i++) {
         const vectorPointer = heap[offset + i];
 
-        returnData.push(prepareVectorReturnValue(Module, vectorPointer, [columns, 0], heapOut));
+        matrix.push(prepareVectorReturnValue(Module, vectorPointer, [columns, 0], heapOut));
     }
 
-    return returnData;
+    return matrix;
 }
 
 export const ccallArrays = (

@@ -89,14 +89,14 @@ const operateOnArrays = (
     if (columnsA === 0 && rowsA === columnsB) {
         // a is a vector
         // broadcast a to b
-        operandA = (b as Vector).map(() => a as Vector)
+        operandA = (b as Matrix).map(() => a as Vector)
         columnsA = rowsA;
         rowsA = rowsB;
     }
     else if (columnsB === 0 && rowsB === columnsA) {
         // b is a vector
         // broadcast b to a
-        operandB = (a as Vector).map(() => b as Vector)
+        operandB = (a as Matrix).map(() => b as Vector)
         columnsB = rowsB;
         rowsB = rowsA;
     }
@@ -104,12 +104,12 @@ const operateOnArrays = (
     if (columnsA === columnsB) {
         if (rowsA === 1 && rowsB > 1) {
             // broadcast rowsA to rowsB
-            operandA = (b as Vector).map(() => a[0] as Vector)
+            operandA = (b as Matrix).map(() => a[0] as Vector)
             rowsA = rowsB;
         }
         else if (rowsB === 1 && rowsA > 1) {
             // broadcast rowsB to rowsA
-            operandB = (a as Vector).map(() => b[0] as Vector)
+            operandB = (a as Matrix).map(() => b[0] as Vector)
             rowsB = rowsA;
         }
     }

@@ -6,16 +6,6 @@ import shape from "./shape";
 
 const gpu = new GPU();
 
-const toArray = (typedArray: any) => {
-    const result = Array(typedArray.length);
-
-    for (let i = 0; i < typedArray.length; i++) {
-        result[i] = typedArray[i];
-    }
-
-    return result;
-}
-
 /* istanbul ignore next */
 const operateOnScalarsKernel = gpu.createKernel(
     function (a: number, b: number, operator: number) {
@@ -147,9 +137,8 @@ export default class ArithmeticOperatorGPU implements ArithmeticOperator {
     ): Matrix {
         const [rows, columns] = shape(a);
         const operate = makeMatricesKernel(rows, columns);
-        const matrix = operate(a, b, operation) as Vector;
 
-        return matrix.map(vector => toArray(vector));
+        return operate(a as any, b as any, operation) as any;
     }
 
     operateOnMatrixAndScalar(
@@ -159,9 +148,8 @@ export default class ArithmeticOperatorGPU implements ArithmeticOperator {
     ): Matrix {
         const [rows, columns] = shape(a);
         const operate = makeMatrixByScalarKernel(rows, columns);
-        const matrix = operate(a, b, operation) as Vector;
 
-        return matrix.map(vector => toArray(vector));
+        return operate(a as any, b, operation) as any;
     }
 
     operateOnScalars(
@@ -178,9 +166,8 @@ export default class ArithmeticOperatorGPU implements ArithmeticOperator {
         operation: ArithmeticOperation
     ): Vector {
         const operate = makeVectorByScalarKernel(a.length);
-        const vector = operate(a, b, operation) as Vector;
 
-        return toArray(vector);
+        return operate(a, b, operation) as any;
     }
 
     operateOnVectors(
@@ -190,6 +177,6 @@ export default class ArithmeticOperatorGPU implements ArithmeticOperator {
     ): Vector {
         const operate = makeVectorsKernel(a.length);
 
-        return toArray(operate(a, b, operation) as Vector);
+        return operate(a, b, operation) as any;
     }
 }

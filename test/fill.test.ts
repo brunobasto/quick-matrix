@@ -3,7 +3,7 @@
  */
 
 import { Shape } from '../src/ts/types';
-import fill from '../src/ts/fill';
+import { fill } from '../src/ts/fill';
 import shape from '../src/ts/shape';
 
 test(`Creates a matrix of given shape with given number`, () => {

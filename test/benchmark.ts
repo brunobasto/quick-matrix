@@ -1,15 +1,15 @@
 import { ArithmeticOperation } from '../src/ts/ArithmeticOperator';
+import { fill, fillVector } from '../src/ts/fill';
 import ArithmeticOperatorGPU from '../src/ts/ArithmeticOperatorGPU';
 import ArithmeticOperatorV8 from '../src/ts/ArithmeticOperatorV8';
 import ArithmeticOperatorWASM from '../src/ts/ArithmeticOperatorWASM';
 import countdown from 'countdown';
-import fill from '../src/ts/fill';
 import shape from '../src/ts/shape';
 
 const benchmark = (
     name: string,
     fn: Function,
-    iterations: number = 100
+    iterations: number = 1000
 ) => {
     const start = (new Date()).getTime();
 
@@ -38,12 +38,12 @@ const benchmark = (
     const v8 = new ArithmeticOperatorV8();
 
     const scalar = 5;
-    const smallVector = Array(10e2).fill(scalar);
-    const mediumVector = Array(10e4).fill(scalar);
-    const largeVector = Array(10e5).fill(scalar);
+    const smallVector = fillVector(10e2, scalar);
+    const mediumVector = fillVector(10e4, scalar);
+    const largeVector = fillVector(10e5, scalar);
     const smallMatrix = fill([5, 5], scalar);
     const mediumMatrix = fill([100, 100], scalar);
-    const largeMatrix = fill([1000, 1000], scalar);
+    const largeMatrix = fill([1024, 1024], scalar);
 
     const benchmarkScalarScalar = () => {
         console.log(`=== scalar x scalar ===`);
