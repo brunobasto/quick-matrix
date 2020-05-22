@@ -1,5 +1,5 @@
 import { Engine, ArithmeticOperation } from "./Engine";
-import { ccallArrays } from '../wasm-arrays';
+import { ccallArrays } from '../wasm';
 import { Matrix, Vector } from "../types";
 import * as Module from '../../../wasm/native';
 import shape from "../shape";
