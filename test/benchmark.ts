@@ -1,8 +1,8 @@
-import { ArithmeticOperation } from '../src/ts/ArithmeticOperator';
+import { ArithmeticOperation } from '../src/ts/Engine';
 import { fill, fillVector } from '../src/ts/fill';
-import ArithmeticOperatorGPU from '../src/ts/ArithmeticOperatorGPU';
-import ArithmeticOperatorV8 from '../src/ts/ArithmeticOperatorV8';
-import ArithmeticOperatorWASM from '../src/ts/ArithmeticOperatorWASM';
+import EngineGPU from '../src/ts/EngineGPU';
+import EngineV8 from '../src/ts/EngineV8';
+import EngineWASM from '../src/ts/EngineWASM';
 import countdown from 'countdown';
 import shape from '../src/ts/shape';
 
@@ -33,9 +33,9 @@ const benchmark = (
 (() => {
     const { MULTIPLY } = ArithmeticOperation;
 
-    const gpu = new ArithmeticOperatorGPU();
-    const wasm = new ArithmeticOperatorWASM();
-    const v8 = new ArithmeticOperatorV8();
+    const gpu = new EngineGPU();
+    const wasm = new EngineWASM();
+    const v8 = new EngineV8();
 
     const scalar = 5;
     const smallVector = fillVector(10e2, scalar);

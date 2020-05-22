@@ -1,17 +1,17 @@
-import { ArithmeticOperator, ArithmeticOperation } from "./ArithmeticOperator";
+import { Engine, ArithmeticOperation } from "./Engine";
 import { VectorOrMatrix, Matrix, Vector, Value } from "./types";
-import ArithmeticOperatorV8 from "./ArithmeticOperatorV8";
-import ArithmeticOperatorWASM from "./ArithmeticOperatorWASM";
+import EngineV8 from "./EngineV8";
+import EngineWASM from "./EngineWASM";
 import shape from "./shape";
 import memoize from 'fast-memoize';
 
 const getBestEngine = memoize(
-    (cost: number): ArithmeticOperator => {
+    (cost: number): Engine => {
         if (cost > 0) {
-            return new ArithmeticOperatorWASM();
+            return new EngineWASM();
         }
 
-        return new ArithmeticOperatorV8();
+        return new EngineV8();
     }
 );
 

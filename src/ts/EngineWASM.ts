@@ -1,10 +1,10 @@
-import { ArithmeticOperator, ArithmeticOperation } from "./ArithmeticOperator";
+import { Engine, ArithmeticOperation } from "./Engine";
 import { ccallArrays } from './wasm-arrays';
 import { Matrix, Vector } from "./types";
 import * as Module from '../../wasm/native';
 import shape from "./shape";
 
-export default class ArithmeticOperatorWASM implements ArithmeticOperator {
+export default class EngineWASM implements Engine {
     operateOnMatrices(
         a: Matrix,
         b: Matrix,

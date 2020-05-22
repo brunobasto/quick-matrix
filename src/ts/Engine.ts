@@ -7,7 +7,7 @@ export enum ArithmeticOperation {
     SUBTRACT,
 }
 
-export interface ArithmeticOperator {
+export interface Engine {
     operateOnMatrices: (
         a: Matrix,
         b: Matrix,

@@ -1,4 +1,4 @@
-import { ArithmeticOperator, ArithmeticOperation } from "./ArithmeticOperator";
+import { Engine, ArithmeticOperation } from "./Engine";
 import { GPU } from 'gpu.js';
 import { Matrix, Vector } from "./types";
 import memoize from "fast-memoize";
@@ -129,7 +129,7 @@ const makeVectorsKernel = memoize((rows) => {
     ).setOutput([rows]);
 });
 
-export default class ArithmeticOperatorGPU implements ArithmeticOperator {
+export default class EngineGPU implements Engine {
     operateOnMatrices(
         a: Matrix,
         b: Matrix,

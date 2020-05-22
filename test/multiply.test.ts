@@ -2,17 +2,17 @@
  * @jest-environment node
  */
 
-import { ArithmeticOperation } from '../src/ts/ArithmeticOperator';
+import { ArithmeticOperation } from '../src/ts/Engine';
 import { from } from '../src/ts/from';
 import { Vector, Matrix } from '../src/ts/types';
-import ArithmeticOperatorGPU from '../src/ts/ArithmeticOperatorGPU';
-import ArithmeticOperatorV8 from '../src/ts/ArithmeticOperatorV8';
-import ArithmeticOperatorWASM from '../src/ts/ArithmeticOperatorWASM';
+import EngineGPU from '../src/ts/EngineGPU';
+import EngineV8 from '../src/ts/EngineV8';
+import EngineWASM from '../src/ts/EngineWASM';
 import multiply from '../src/ts/multiply';
 
-const gpu = new ArithmeticOperatorGPU();
-const v8 = new ArithmeticOperatorV8();
-const wasm = new ArithmeticOperatorWASM();
+const gpu = new EngineGPU();
+const v8 = new EngineV8();
+const wasm = new EngineWASM();
 
 const { MULTIPLY } = ArithmeticOperation;
 

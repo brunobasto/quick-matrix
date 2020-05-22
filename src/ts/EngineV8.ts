@@ -1,7 +1,7 @@
-import { ArithmeticOperator, ArithmeticOperation } from "./ArithmeticOperator";
+import { Engine, ArithmeticOperation } from "./Engine";
 import { Matrix, Vector } from "./types";
 
-export default class ArithmeticOperatorV8 implements ArithmeticOperator {
+export default class EngineV8 implements Engine {
     operateOnMatrices(
         a: Matrix,
         b: Matrix,
