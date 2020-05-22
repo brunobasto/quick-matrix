@@ -1,0 +1,6 @@
+node_modules
+coverage
+build
+wasm
+.vscode
+yarn-error.log

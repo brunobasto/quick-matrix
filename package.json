@@ -1,0 +1,36 @@
+{
+	"name": "fast-matrix",
+	"version": "1.0.0",
+	"license": "MIT",
+	"dependencies": {
+		"fast-memoize": "^2.5.2",
+		"gpu.js": "^2.9.4"
+	},
+	"devDependencies": {
+		"@types/emscripten": "^1.39.4",
+		"@types/jest": "^25.2.1",
+		"countdown": "^2.6.0",
+		"jest": "24.9.0",
+		"jest-extended": "^0.11.5",
+		"ts-jest": "^24.0.0",
+		"typescript": "^3.8.3"
+	},
+	"scripts": {
+		"benchmark": "yarn build:emscripten && ts-node src/ts/benchmark.ts",
+		"build:emscripten": "docker run --rm -v $(pwd):/src trzeci/emscripten ./build.sh",
+		"build": "tsc",
+		"test": "yarn build:emscripten && jest"
+	},
+	"jest": {
+		"setupFilesAfterEnv": ["jest-extended"],
+		"transform": {
+			".(ts|tsx)": "ts-jest"
+		},
+		"testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$",
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js"
+		]
+	}
+}
