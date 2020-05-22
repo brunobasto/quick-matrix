@@ -78,12 +78,18 @@ const prepareVectorReturnValue = (
     Module: EmscriptenModule,
     returnValue: number,
     returnShape: Shape,
+    shouldFree: boolean = false
 ): Vector => {
     const [rows,] = returnShape;
     const heap = Module.HEAPF32;
     const offset = returnValue / Float32Array.BYTES_PER_ELEMENT;
+    const vector = heap.slice(offset, offset + rows);
 
-    return heap.slice(offset, offset + rows);
+    if (shouldFree) {
+        Module._free(returnValue);
+    }
+
+    return vector;
 }
 
 const prepareMatrixReturnValue = (
@@ -92,15 +98,20 @@ const prepareMatrixReturnValue = (
     returnShape: Shape,
 ): Matrix => {
     const [rows, columns] = returnShape;
-    const matrix: Matrix = []
     const heap = Module.HEAPU32
     const offset = returnValue / heap.BYTES_PER_ELEMENT;
+    const matrix: Matrix = []
 
     for (let i = 0; i < rows; i++) {
-        const vectorPointer = heap[offset + i];
-
-        matrix.push(prepareVectorReturnValue(Module, vectorPointer, [columns, 0]));
+        matrix[i] = prepareVectorReturnValue(
+            Module,
+            heap[offset + i],
+            [columns, 0],
+            true
+        );
     }
+
+    Module._free(returnValue);
 
     return matrix;
 }
@@ -152,7 +163,7 @@ export const ccallArrays = (
         error = e;
     } finally {
         while (garbage.length) {
-            Module._free(garbage.pop());
+            Module._free(garbage.shift());
         }
     }
 

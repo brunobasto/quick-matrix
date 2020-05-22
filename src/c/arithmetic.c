@@ -60,11 +60,10 @@ float** addMatrixByScalar(
     int columns,
     float scalar)
 {
-    float* values = calloc(rows * columns, sizeof(float));
     float** result = malloc(rows * sizeof(float*));
 
     for (int i = 0; i < rows; i++) {
-        result[i] = values + i * columns;
+        result[i] = malloc(columns * sizeof(float));
 
         for (int j = 0; j < columns; j++) {
             result[i][j] = scalar + matrix[i][j];
@@ -81,11 +80,10 @@ float** multiplyMatrixByScalar(
     int columns,
     float scalar)
 {
-    float* values = calloc(rows * columns, sizeof(float));
     float** result = malloc(rows * sizeof(float*));
 
     for (int i = 0; i < rows; i++) {
-        result[i] = values + i * columns;
+        result[i] = malloc(columns * sizeof(float));
 
         for (int j = 0; j < columns; j++) {
             result[i][j] = scalar * matrix[i][j];
@@ -104,11 +102,10 @@ float** multiplyMatrices(
     int rowsB,
     int columnsB)
 {
-    float* values = calloc(rowsA * columnsA, sizeof(float));
     float** result = malloc(rowsA * sizeof(float*));
 
     for (int i = 0; i < rowsA; i++) {
-        result[i] = values + i * columnsA;
+        result[i] = malloc(columnsA * sizeof(float));
 
         for (int j = 0; j < columnsA; j++) {
             result[i][j] = matrixA[i][j] * matrixB[i][j];
@@ -127,11 +124,10 @@ float** addMatrices(
     int rowsB,
     int columnsB)
 {
-    float* values = calloc(rowsA * columnsA, sizeof(float));
     float** result = malloc(rowsA * sizeof(float*));
 
     for (int i = 0; i < rowsA; i++) {
-        result[i] = values + i * columnsA;
+        result[i] = malloc(columnsA * sizeof(float));
 
         for (int j = 0; j < columnsA; j++) {
             result[i][j] = matrixA[i][j] + matrixB[i][j];

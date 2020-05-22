@@ -44,6 +44,8 @@ const benchmark = (
     const smallMatrix = fill([5, 5], scalar);
     const mediumMatrix = fill([100, 100], scalar);
     const largeMatrix = fill([1024, 1024], scalar);
+    const largeRowsMatrix = fill([16384, 100], scalar);
+    const largeColumnsMatrix = fill([100, 16384], scalar);
 
     const benchmarkScalarScalar = () => {
         console.log(`=== scalar x scalar ===`);
@@ -174,8 +176,31 @@ const benchmark = (
         benchmark(`V8`, () => {
             v8.operateOnMatrixAndScalar(largeMatrix, scalar, MULTIPLY)
         });
-    }
+        // large rows
+        console.log(`=== matrix(${shape(largeRowsMatrix)}) x scalar === `);
 
+        benchmark(`WASM`, () => {
+            wasm.operateOnMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
+        });
+        benchmark(`GPU`, () => {
+            gpu.operateOnMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
+        });
+        benchmark(`V8`, () => {
+            v8.operateOnMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
+        });
+        // large columns
+        console.log(`=== matrix(${shape(largeColumnsMatrix)}) x scalar === `);
+
+        benchmark(`WASM`, () => {
+            wasm.operateOnMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
+        });
+        benchmark(`GPU`, () => {
+            gpu.operateOnMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
+        });
+        benchmark(`V8`, () => {
+            v8.operateOnMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
+        });
+    }
 
     const benchmarkMatrixMatrix = () => {
         // small
