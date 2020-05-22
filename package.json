@@ -13,16 +13,19 @@
 		"jest": "24.9.0",
 		"jest-extended": "^0.11.5",
 		"ts-jest": "^24.0.0",
+		"ts-node": "^8.10.1",
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
-		"benchmark": "yarn build:emscripten && ts-node src/ts/benchmark.ts",
+		"benchmark": "yarn build:emscripten && ts-node test/benchmark.ts",
 		"build:emscripten": "docker run --rm -v $(pwd):/src trzeci/emscripten ./build.sh",
-		"build": "tsc",
+		"build": "build:emscripten && tsc",
 		"test": "yarn build:emscripten && jest"
 	},
 	"jest": {
-		"setupFilesAfterEnv": ["jest-extended"],
+		"setupFilesAfterEnv": [
+			"jest-extended"
+		],
 		"transform": {
 			".(ts|tsx)": "ts-jest"
 		},
