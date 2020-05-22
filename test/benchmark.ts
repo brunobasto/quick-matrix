@@ -1,10 +1,10 @@
 import { ArithmeticOperation } from '../src/ts/engines/Engine';
-import { fill, fillVector } from '../src/ts/fill';
+import { fill, fillVector } from '../src/ts/api/fill';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';
 import EngineWASM from '../src/ts/engines/EngineWASM';
 import countdown from 'countdown';
-import shape from '../src/ts/shape';
+import shape from '../src/ts/api/shape';
 
 const benchmark = (
     name: string,

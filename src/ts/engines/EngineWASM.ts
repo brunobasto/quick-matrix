@@ -1,8 +1,8 @@
-import { Engine, ArithmeticOperation } from "./Engine";
+import { Engine, ArithmeticOperation } from './Engine';
 import { ccallArrays } from '../wasm';
-import { Matrix, Vector } from "../types";
+import { Matrix, Vector } from '../types';
 import * as Module from '../../../wasm/native';
-import shape from "../shape";
+import shape from '../api/shape';
 
 export default class EngineWASM implements Engine {
     operateOnMatrices(

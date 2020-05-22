@@ -1,4 +1,4 @@
-import { Value } from "./types";
+import { Value } from "../types";
 
 export const from = (value: any): Value => {
     if (value instanceof Float32Array) {

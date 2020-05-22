@@ -1,5 +1,5 @@
 import { Shape, Vector, Matrix } from './types'
-import shape from './shape'
+import shape from './api/shape'
 
 const garbage: any = [];
 

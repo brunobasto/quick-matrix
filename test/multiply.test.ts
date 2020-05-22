@@ -3,12 +3,12 @@
  */
 
 import { ArithmeticOperation } from '../src/ts/engines/Engine';
-import { from } from '../src/ts/from';
+import { from } from '../src/ts/api/from';
 import { Vector, Matrix } from '../src/ts/types';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';
 import EngineWASM from '../src/ts/engines/EngineWASM';
-import multiply from '../src/ts/multiply';
+import multiply from '../src/ts/api/multiply';
 
 const gpu = new EngineGPU();
 const v8 = new EngineV8();

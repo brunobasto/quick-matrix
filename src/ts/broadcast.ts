@@ -1,8 +1,8 @@
-import { Engine, ArithmeticOperation } from "./engines/Engine";
-import { VectorOrMatrix, Matrix, Vector, Value } from "./types";
-import EngineV8 from "./engines/EngineV8";
-import EngineWASM from "./engines/EngineWASM";
-import shape from "./shape";
+import { Engine, ArithmeticOperation } from './engines/Engine';
+import { VectorOrMatrix, Matrix, Vector, Value } from './types';
+import EngineV8 from './engines/EngineV8';
+import EngineWASM from './engines/EngineWASM';
+import shape from './api/shape';
 import memoize from 'fast-memoize';
 
 const getBestEngine = memoize(

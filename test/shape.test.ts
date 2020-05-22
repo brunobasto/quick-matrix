@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 
-import shape from '../src/ts/shape';
-import { from } from '../src/ts/from';
+import { from } from '../src/ts/api/from';
+import shape from '../src/ts/api/shape';
 
 test(`shape of number`, () => {
     expect(shape(2)).toStrictEqual([0, 0]);

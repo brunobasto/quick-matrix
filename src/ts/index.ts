@@ -1,1 +1,1 @@
-export {default as multiply} from './multiply';
+export {default as multiply} from './api/multiply';

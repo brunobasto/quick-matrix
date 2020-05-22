@@ -1,4 +1,4 @@
-import { Value, Shape } from "./types";
+import { Value, Shape } from '../types';
 
 export default (a: Value): Shape => {
     if (Array.isArray(a) || a instanceof Float32Array) {

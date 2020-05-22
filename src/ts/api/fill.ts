@@ -1,4 +1,4 @@
-import { Shape, Matrix, Vector } from "./types";
+import { Shape, Matrix, Vector } from "../types";
 
 export const fillVector = (size: number, value: number): Vector => {
     const vector = new Float32Array(size);

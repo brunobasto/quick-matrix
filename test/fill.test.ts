@@ -3,8 +3,8 @@
  */
 
 import { Shape } from '../src/ts/types';
-import { fill } from '../src/ts/fill';
-import shape from '../src/ts/shape';
+import { fill } from '../src/ts/api/fill';
+import shape from '../src/ts/api/shape';
 
 test(`Creates a matrix of given shape with given number`, () => {
     const value = 5;
