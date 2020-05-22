@@ -3,20 +3,9 @@ import shape from './shape'
 
 const garbage: any = [];
 
-const heapMap: any = {}
-heapMap.HEAP8 = Int8Array // int8_t
-heapMap.HEAPU8 = Uint8Array // uint8_t
-heapMap.HEAP16 = Int16Array // int16_t
-heapMap.HEAPU16 = Uint16Array // uint16_t
-heapMap.HEAP32 = Int32Array // int32_t
-heapMap.HEAPU32 = Uint32Array // uint32_t
-heapMap.HEAPF32 = Float32Array // float
-heapMap.HEAPF64 = Float64Array // double
-
 const allocateMatrix = (
     Module: EmscriptenModule,
     matrix: Matrix,
-    heapIn: string,
 ) => {
     const [rows,] = shape(matrix);
     const pointers = new Uint32Array(rows);
@@ -25,7 +14,6 @@ const allocateMatrix = (
         pointers[i] = allocateVector(
             Module,
             matrix[i],
-            heapIn
         );
     }
 
@@ -43,26 +31,12 @@ const allocateMatrix = (
 const allocateVector = (
     Module: EmscriptenModule,
     vector: Vector,
-    heapIn: string,
 ) => {
     const pointer = Module._malloc(vector.length * vector.BYTES_PER_ELEMENT);
 
     garbage.push(pointer);
 
-    switch (heapIn) {
-        case 'HEAP8': case 'HEAPU8':
-            Module[heapIn].set(vector, pointer)
-            break
-        case 'HEAP16': case 'HEAPU16':
-            Module[heapIn].set(vector, pointer >> 1)
-            break
-        case 'HEAP32': case 'HEAPU32': case 'HEAPF32':
-            Module[heapIn].set(vector, pointer >> 2)
-            break
-        case 'HEAPF64':
-            Module[heapIn].set(vector, pointer >> 3)
-            break
-    }
+    Module.HEAPF32.set(vector, pointer >> 2);
 
     return pointer;
 }
@@ -70,11 +44,10 @@ const allocateVector = (
 const prepareVectorArgument = (
     Module: EmscriptenModule,
     vector: Vector,
-    heapIn: string,
     parameters: any,
     parameterTypes: any,
 ) => {
-    const pointer = allocateVector(Module, vector, heapIn);
+    const pointer = allocateVector(Module, vector);
 
     parameters.push(pointer);
     parameters.push(vector.length);
@@ -85,12 +58,11 @@ const prepareVectorArgument = (
 const prepareMatrixArgument = (
     Module: EmscriptenModule,
     matrix: Matrix,
-    heapIn: string,
     parameters: any,
     parameterTypes: any,
 ) => {
     const [rows, columns] = shape(matrix);
-    const pointer = allocateMatrix(Module, matrix, heapIn);
+    const pointer = allocateMatrix(Module, matrix);
 
     parameters.push(pointer);
     parameterTypes.push('number');
@@ -106,11 +78,10 @@ const prepareVectorReturnValue = (
     Module: EmscriptenModule,
     returnValue: number,
     returnShape: Shape,
-    heapOut: string
 ): Vector => {
     const [rows,] = returnShape;
-    const heap = Module[heapOut];
-    const offset = returnValue / heapMap[heapOut].BYTES_PER_ELEMENT;
+    const heap = Module.HEAPF32;
+    const offset = returnValue / Float32Array.BYTES_PER_ELEMENT;
 
     return heap.slice(offset, offset + rows);
 }
@@ -119,7 +90,6 @@ const prepareMatrixReturnValue = (
     Module: EmscriptenModule,
     returnValue: number,
     returnShape: Shape,
-    heapOut: string
 ): Matrix => {
     const [rows, columns] = returnShape;
     const matrix: Matrix = []
@@ -129,7 +99,7 @@ const prepareMatrixReturnValue = (
     for (let i = 0; i < rows; i++) {
         const vectorPointer = heap[offset + i];
 
-        matrix.push(prepareVectorReturnValue(Module, vectorPointer, [columns, 0], heapOut));
+        matrix.push(prepareVectorReturnValue(Module, vectorPointer, [columns, 0]));
     }
 
     return matrix;
@@ -142,8 +112,6 @@ export const ccallArrays = (
     paramTypes,
     params,
     {
-        heapIn = 'HEAPF32',
-        heapOut = 'HEAPF32',
         returnShape = [0, 0] as Shape,
     } = {}) => {
     let returnValue;
@@ -160,7 +128,6 @@ export const ccallArrays = (
                     prepareMatrixArgument(
                         Module,
                         params[p],
-                        heapIn,
                         parameters,
                         parameterTypes,
                     );
@@ -169,7 +136,6 @@ export const ccallArrays = (
                     prepareVectorArgument(
                         Module,
                         params[p],
-                        heapIn,
                         parameters,
                         parameterTypes,
                     );
@@ -197,7 +163,6 @@ export const ccallArrays = (
             Module,
             returnValue,
             returnShape,
-            heapOut
         );
     }
 
@@ -206,7 +171,6 @@ export const ccallArrays = (
             Module,
             returnValue,
             returnShape,
-            heapOut
         );
     }
 

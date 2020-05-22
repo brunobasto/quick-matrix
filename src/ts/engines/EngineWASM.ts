@@ -19,8 +19,6 @@ export default class EngineWASM implements Engine {
             ['matrix', 'matrix'],
             [a, b],
             {
-                heapIn: 'HEAPF32',
-                heapOut: 'HEAPF32',
                 returnShape: shape(a)
             }
         );
@@ -40,8 +38,6 @@ export default class EngineWASM implements Engine {
             ['matrix', 'number'],
             [a, b],
             {
-                heapIn: 'HEAPF32',
-                heapOut: 'HEAPF32',
                 returnShape: shape(a)
             }
         );
@@ -61,8 +57,6 @@ export default class EngineWASM implements Engine {
             ['number', 'number'],
             [a, b],
             {
-                heapIn: 'HEAPF32',
-                heapOut: 'HEAPF32',
                 returnShape: shape(a)
             }
         );
@@ -82,8 +76,6 @@ export default class EngineWASM implements Engine {
             ['vector', 'number'],
             [a, b],
             {
-                heapIn: 'HEAPF32',
-                heapOut: 'HEAPF32',
                 returnShape: shape(a)
             }
         );
@@ -103,8 +95,6 @@ export default class EngineWASM implements Engine {
             ['vector', 'vector'],
             [a, b],
             {
-                heapIn: 'HEAPF32',
-                heapOut: 'HEAPF32',
                 returnShape: shape(a)
             }
         );
