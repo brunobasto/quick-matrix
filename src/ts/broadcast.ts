@@ -7,7 +7,7 @@ import memoize from 'fast-memoize';
 
 const getBestEngine = memoize(
     (cost: number): Engine => {
-        if (cost > 0) {
+        if (cost > 1) {
             return new EngineWASM();
         }
 

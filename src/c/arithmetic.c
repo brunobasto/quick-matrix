@@ -2,32 +2,34 @@
 #include <stdlib.h>
 
 EMSCRIPTEN_KEEPALIVE
-float addScalars(
+float operateOnScalars(
     float a,
-    float b)
+    float b,
+    int operation)
 {
-    return a + b;
+    if (operation == 0) {
+        return a + b;
+    } else if (operation == 1) {
+        return a / b;
+    } else if (operation == 2) {
+        return a * b;
+    }
+
+    return a - b;
 }
 
 EMSCRIPTEN_KEEPALIVE
-float multiplyScalars(
-    float a,
-    float b)
-{
-    return a * b;
-}
-
-EMSCRIPTEN_KEEPALIVE
-float* addVectors(
+float* operateOnVectors(
     float* a,
     int aSize,
     float* b,
-    int bSize)
+    int bSize,
+    int operation)
 {
     float result[aSize];
 
     for (int i = 0; i < aSize; i++) {
-        result[i] = a[i] + b[i];
+        result[i] = operateOnScalars(a[i], b[i], operation);
     }
 
     float* arrayPtr = &result[0];
@@ -36,29 +38,12 @@ float* addVectors(
 }
 
 EMSCRIPTEN_KEEPALIVE
-float* multiplyVectors(
-    float* a,
-    int aSize,
-    float* b,
-    int bSize)
-{
-    float result[aSize];
-
-    for (int i = 0; i < aSize; i++) {
-        result[i] = a[i] * b[i];
-    }
-
-    float* arrayPtr = &result[0];
-
-    return arrayPtr;
-}
-
-EMSCRIPTEN_KEEPALIVE
-float** addMatrixByScalar(
+float** operateOnMatrixAndScalar(
     float** matrix,
     int rows,
     int columns,
-    float scalar)
+    float scalar,
+    int operation)
 {
     float** result = malloc(rows * sizeof(float*));
 
@@ -66,7 +51,7 @@ float** addMatrixByScalar(
         result[i] = malloc(columns * sizeof(float));
 
         for (int j = 0; j < columns; j++) {
-            result[i][j] = scalar + matrix[i][j];
+            result[i][j] = operateOnScalars(scalar, matrix[i][j], operation);
         }
     }
 
@@ -74,33 +59,14 @@ float** addMatrixByScalar(
 }
 
 EMSCRIPTEN_KEEPALIVE
-float** multiplyMatrixByScalar(
-    float** matrix,
-    int rows,
-    int columns,
-    float scalar)
-{
-    float** result = malloc(rows * sizeof(float*));
-
-    for (int i = 0; i < rows; i++) {
-        result[i] = malloc(columns * sizeof(float));
-
-        for (int j = 0; j < columns; j++) {
-            result[i][j] = scalar * matrix[i][j];
-        }
-    }
-
-    return result;
-}
-
-EMSCRIPTEN_KEEPALIVE
-float** multiplyMatrices(
+float** operateOnMatrices(
     float** matrixA,
     int rowsA,
     int columnsA,
     float** matrixB,
     int rowsB,
-    int columnsB)
+    int columnsB,
+    int operation)
 {
     float** result = malloc(rowsA * sizeof(float*));
 
@@ -108,7 +74,7 @@ float** multiplyMatrices(
         result[i] = malloc(columnsA * sizeof(float));
 
         for (int j = 0; j < columnsA; j++) {
-            result[i][j] = matrixA[i][j] * matrixB[i][j];
+            result[i][j] = operateOnScalars(matrixA[i][j], matrixB[i][j], operation);
         }
     }
 
@@ -116,54 +82,16 @@ float** multiplyMatrices(
 }
 
 EMSCRIPTEN_KEEPALIVE
-float** addMatrices(
-    float** matrixA,
-    int rowsA,
-    int columnsA,
-    float** matrixB,
-    int rowsB,
-    int columnsB)
-{
-    float** result = malloc(rowsA * sizeof(float*));
-
-    for (int i = 0; i < rowsA; i++) {
-        result[i] = malloc(columnsA * sizeof(float));
-
-        for (int j = 0; j < columnsA; j++) {
-            result[i][j] = matrixA[i][j] + matrixB[i][j];
-        }
-    }
-
-    return result;
-}
-
-EMSCRIPTEN_KEEPALIVE
-float* addVectorByScalar(
+float* operateOnVectorAndScalar(
     float* vector,
     int vectorSize,
-    float scalar)
+    float scalar,
+    int operation)
 {
     float result[vectorSize];
 
     for (int i = 0; i < vectorSize; i++) {
-        result[i] = scalar + vector[i];
-    }
-
-    float* arrayPtr = &result[0];
-
-    return arrayPtr;
-}
-
-EMSCRIPTEN_KEEPALIVE
-float* multiplyVectorByScalar(
-    float* vector,
-    int vectorSize,
-    float scalar)
-{
-    float result[vectorSize];
-
-    for (int i = 0; i < vectorSize; i++) {
-        result[i] = scalar * vector[i];
+        result[i] = operateOnScalars(scalar, vector[i], operation);
     }
 
     float* arrayPtr = &result[0];

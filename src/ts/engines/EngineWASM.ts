@@ -10,14 +10,12 @@ export default class EngineWASM implements Engine {
         b: Matrix,
         operation: ArithmeticOperation
     ): Matrix {
-        const operationName = this.getOperationName(operation);
-
         return ccallArrays(
             Module,
-            `${operationName}Matrices`,
+            `operateOnMatrices`,
             'matrix',
             ['matrix', 'matrix'],
-            [a, b],
+            [a, b, operation],
             {
                 returnShape: shape(a)
             }
@@ -29,14 +27,12 @@ export default class EngineWASM implements Engine {
         b: number,
         operation: ArithmeticOperation
     ): Matrix {
-        const operationName = this.getOperationName(operation);
-
         return ccallArrays(
             Module,
-            `${operationName}MatrixByScalar`,
+            `operateOnMatrixAndScalar`,
             'matrix',
             ['matrix', 'number'],
-            [a, b],
+            [a, b, operation],
             {
                 returnShape: shape(a)
             }
@@ -48,14 +44,12 @@ export default class EngineWASM implements Engine {
         b: number,
         operation: ArithmeticOperation
     ): number {
-        const operationName = this.getOperationName(operation);
-
         return ccallArrays(
             Module,
-            `${operationName}Scalars`,
+            `operateOnScalars`,
             'number',
             ['number', 'number'],
-            [a, b],
+            [a, b, operation],
             {
                 returnShape: shape(a)
             }
@@ -67,14 +61,12 @@ export default class EngineWASM implements Engine {
         b: number,
         operation: ArithmeticOperation
     ): Vector {
-        const operationName = this.getOperationName(operation);
-
         return ccallArrays(
             Module,
-            `${operationName}VectorByScalar`,
+            `operateOnVectorAndScalar`,
             'vector',
             ['vector', 'number'],
-            [a, b],
+            [a, b, operation],
             {
                 returnShape: shape(a)
             }
@@ -86,33 +78,15 @@ export default class EngineWASM implements Engine {
         b: Vector,
         operation: ArithmeticOperation
     ): Vector {
-        const operationName = this.getOperationName(operation);
-
         return ccallArrays(
             Module,
-            `${operationName}Vectors`,
+            `operateOnVectors`,
             'vector',
             ['vector', 'vector'],
-            [a, b],
+            [a, b, operation],
             {
                 returnShape: shape(a)
             }
         );
     }
-
-    private getOperationName(operation: ArithmeticOperation) {
-        switch (operation) {
-            case ArithmeticOperation.ADD:
-                return 'add';
-            case ArithmeticOperation.DIVIDE:
-                return 'divide';
-            case ArithmeticOperation.MULTIPLY:
-                return 'multiply';
-            case ArithmeticOperation.SUBTRACT:
-                return 'subtract';
-        }
-
-        throw new Error(`Unimplementted arithmetic operation ${operation}`);
-    }
-    
 }
