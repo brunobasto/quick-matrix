@@ -9,7 +9,7 @@ import shape from '../src/ts/shape';
 const benchmark = (
     name: string,
     fn: Function,
-    iterations: number = 1000
+    iterations: number = 100
 ) => {
     const start = (new Date()).getTime();
 
