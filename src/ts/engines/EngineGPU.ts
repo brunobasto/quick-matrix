@@ -1,8 +1,8 @@
 import { Engine, ArithmeticOperation } from "./Engine";
 import { GPU } from 'gpu.js';
-import { Matrix, Vector } from "./types";
+import { Matrix, Vector } from "../types";
 import memoize from "fast-memoize";
-import shape from "./shape";
+import shape from "../shape";
 
 const gpu = new GPU();
 

@@ -1,4 +1,4 @@
-import { Matrix, Vector } from "./types";
+import { Matrix, Vector } from "../types";
 
 export enum ArithmeticOperation {
     ADD,

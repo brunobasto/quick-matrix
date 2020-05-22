@@ -1,4 +1,4 @@
-import { ArithmeticOperation } from './Engine';
+import { ArithmeticOperation } from './engines/Engine';
 import { Value } from './types';
 import arithmetic from './arithmetic';
 

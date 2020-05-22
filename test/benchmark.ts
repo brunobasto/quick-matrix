@@ -1,8 +1,8 @@
-import { ArithmeticOperation } from '../src/ts/Engine';
+import { ArithmeticOperation } from '../src/ts/engines/Engine';
 import { fill, fillVector } from '../src/ts/fill';
-import EngineGPU from '../src/ts/EngineGPU';
-import EngineV8 from '../src/ts/EngineV8';
-import EngineWASM from '../src/ts/EngineWASM';
+import EngineGPU from '../src/ts/engines/EngineGPU';
+import EngineV8 from '../src/ts/engines/EngineV8';
+import EngineWASM from '../src/ts/engines/EngineWASM';
 import countdown from 'countdown';
 import shape from '../src/ts/shape';
 

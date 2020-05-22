@@ -1,7 +1,7 @@
-import { Engine, ArithmeticOperation } from "./Engine";
+import { Engine, ArithmeticOperation } from "./engines/Engine";
 import { VectorOrMatrix, Matrix, Vector, Value } from "./types";
-import EngineV8 from "./EngineV8";
-import EngineWASM from "./EngineWASM";
+import EngineV8 from "./engines/EngineV8";
+import EngineWASM from "./engines/EngineWASM";
 import shape from "./shape";
 import memoize from 'fast-memoize';
 

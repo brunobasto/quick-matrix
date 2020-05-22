@@ -1,5 +1,5 @@
 import { Engine, ArithmeticOperation } from "./Engine";
-import { Matrix, Vector } from "./types";
+import { Matrix, Vector } from "../types";
 
 export default class EngineV8 implements Engine {
     operateOnMatrices(
