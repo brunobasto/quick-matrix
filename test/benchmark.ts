@@ -41,9 +41,9 @@ const benchmark = (
     const smallVector = fillVector(10e2, scalar);
     const mediumVector = fillVector(10e4, scalar);
     const largeVector = fillVector(10e5, scalar);
-    const smallMatrix = fill([5, 5], scalar);
-    const mediumMatrix = fill([100, 100], scalar);
-    const largeMatrix = fill([1024, 1024], scalar);
+    const smallMatrix = fill([512, 512], scalar);
+    const mediumMatrix = fill([1024, 1024], scalar);
+    const largeMatrix = fill([4096, 4096], scalar);
     const largeRowsMatrix = fill([16384, 100], scalar);
     const largeColumnsMatrix = fill([100, 16384], scalar);
 
