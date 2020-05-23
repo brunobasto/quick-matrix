@@ -1,5 +1,8 @@
 {
 	"name": "quick-matrix",
+	"repository": {
+		"url": "https://github.com/brunobasto/quick-matrix"
+	},
 	"version": "0.0.1",
 	"license": "MIT",
 	"main": "build/index.js",
