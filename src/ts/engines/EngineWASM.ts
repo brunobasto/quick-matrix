@@ -128,6 +128,12 @@ export default class EngineWASM implements Engine {
         a: Matrix,
         operation: Operation
     ): Matrix {
+        let returnShape = shape(a);
+
+        if (operation === Operation.TRANSPOSE) {
+            returnShape = returnShape.reverse();
+        }
+
         return ccallArrays(
             Module,
             `operateUnaryMatrix`,
@@ -135,7 +141,7 @@ export default class EngineWASM implements Engine {
             ['matrix', 'number'],
             [a, operation],
             {
-                returnShape: shape(a)
+                returnShape
             }
         );
     }

@@ -1,6 +1,7 @@
 import { Engine } from './Engine';
 import { GPU } from 'gpu.js';
 import { Matrix, Operation, Vector, Scalar } from '../types';
+import { transpose } from './utils';
 import memoize from 'fast-memoize';
 import shape from '../api/shape';
 
@@ -80,9 +81,16 @@ export default class EngineGPU implements Engine {
         operation: Operation
     ): Matrix {
         const [rows, columns] = shape(a);
-        const operate = makeUnaryMatrixKernel(rows, columns);
 
-        return operate(a as any, operation) as any;
+        if (operation === Operation.TRANSPOSE) {
+            // I'm not sure how to do this with gpu.js
+            return transpose(a);
+        }
+        else {
+            unaryMatrixKernel.setOutput([columns, rows]);
+        }
+
+        return unaryMatrixKernel(a as any, operation) as any;
     }
 }
 
@@ -151,26 +159,26 @@ const makeUnaryVectorKernel = memoize((length) => {
     ).setOutput([length]);
 });
 
-const makeUnaryMatrixKernel = memoize((rows, columns) => {
-    /* istanbul ignore next */
-    return gpu.createKernel(
-        function (
-            a: number[][],
-            operator: number,
-        ) {
-            const operand = a[this.thread.y as number][this.thread.x];
+/* istanbul ignore next */
+const unaryMatrixKernel = gpu.createKernel(
+    function (
+        a: number[][],
+        operator: number,
+    ) {
+        const operand = a[this.thread.y as number][this.thread.x];
 
-            if (operator === 4) {
-                return Math.exp(operand);
-            }
-
-            return operand;
-        },
-        {
-            immutable: true,
+        // exp
+        if (operator === 4) {
+            return Math.exp(operand);
         }
-    ).setOutput([columns, rows]);
-});
+
+        return operand;
+    },
+    {
+        dynamicOutput: true,
+        immutable: true,
+    }
+);
 
 const makeMatrixByScalarKernel = memoize((rows, columns) => {
     /* istanbul ignore next */

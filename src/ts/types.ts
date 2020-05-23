@@ -12,5 +12,6 @@ export enum Operation {
     DIVIDE,
     MULTIPLY,
     SUBTRACT,
-    EXP
+    EXP,
+    TRANSPOSE
 }

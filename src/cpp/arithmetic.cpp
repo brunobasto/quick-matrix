@@ -43,6 +43,21 @@ inline float** operateUnaryMatrix(
     int columns,
     int operation)
 {
+    // transpose
+    if (operation == 5) {
+        float** result = (float**)malloc(columns * sizeof(float*));
+
+        for (int i = 0; i < columns; i++) {
+            result[i] = (float*)malloc(rows * sizeof(float));
+
+            for (int j = 0; j < rows; j++) {
+                result[i][j] = a[j][i];
+            }
+        }
+
+        return result;
+    }
+
     float** result = (float**)malloc(rows * sizeof(float*));
 
     for (int i = 0; i < rows; i++) {

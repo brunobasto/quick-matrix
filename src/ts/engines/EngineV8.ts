@@ -1,5 +1,7 @@
 import { Engine } from "./Engine";
+import { fill } from "../api/fill";
 import { Matrix, Operation, Vector, Scalar } from "../types";
+import shape from "../api/shape";
 
 export default class EngineV8 implements Engine {
     operateBinaryMatrices(
@@ -86,6 +88,19 @@ export default class EngineV8 implements Engine {
         a: Matrix,
         operation: Operation
     ): Matrix {
+        if (operation === Operation.TRANSPOSE) {
+            const [rows, columns] = shape(a);
+            const result = fill([columns, rows], 0) as Matrix;
+
+            for (let i = 0; i < columns; i++) {
+                for (let j = 0; j < rows; j++) {
+                    result[i][j] = a[j][i];
+                }
+            }
+
+            return result;
+        }
+
         return a.map(v => this.operateUnaryVector(v, operation));
     }
 
