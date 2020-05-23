@@ -23,8 +23,8 @@ test(`Subtract two numbers`, () => {
     expect(subtract(3, 2)).toBe(resultB);
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnScalars(operandA, operandB, SUBTRACT)).toBe(resultA);
-        expect(engine.operateOnScalars(operandB, operandA, SUBTRACT)).toBe(resultB);
+        expect(engine.operateBinaryScalars(operandA, operandB, SUBTRACT)).toBe(resultA);
+        expect(engine.operateBinaryScalars(operandB, operandA, SUBTRACT)).toBe(resultB);
     });
 });
 
@@ -40,8 +40,8 @@ test(`Subtract a number and a vector`, () => {
     expect(subtract(vector, number)).toStrictEqual(resultB);
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnVectorAndScalar(vector, number, SUBTRACT, true)).toEqual(resultA);
-        expect(engine.operateOnVectorAndScalar(vector, number, SUBTRACT, false)).toEqual(resultB);
+        expect(engine.operateBinaryVectorAndScalar(vector, number, SUBTRACT, true)).toEqual(resultA);
+        expect(engine.operateBinaryVectorAndScalar(vector, number, SUBTRACT, false)).toEqual(resultB);
     })
 });
 
@@ -66,8 +66,8 @@ test(`Subtract a number and a matrix`, () => {
     expect(subtract(matrix, number)).toStrictEqual(resultB);
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnMatrixAndScalar(matrix, number, SUBTRACT, true)).toEqual(resultA);
-        expect(engine.operateOnMatrixAndScalar(matrix, number, SUBTRACT, false)).toEqual(resultB);
+        expect(engine.operateBinaryMatrixAndScalar(matrix, number, SUBTRACT, true)).toEqual(resultA);
+        expect(engine.operateBinaryMatrixAndScalar(matrix, number, SUBTRACT, false)).toEqual(resultB);
     });
 });
 
@@ -86,8 +86,8 @@ test(`Subtract vectors`, () => {
     expect(() => subtract(vectorA, from([1]))).toThrow();
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnVectors(vectorA, vectorB, SUBTRACT)).toEqual(resultA);
-        expect(engine.operateOnVectors(vectorB, vectorA, SUBTRACT)).toEqual(resultB);
+        expect(engine.operateBinaryVectors(vectorA, vectorB, SUBTRACT)).toEqual(resultA);
+        expect(engine.operateBinaryVectors(vectorB, vectorA, SUBTRACT)).toEqual(resultB);
     })
 });
 
@@ -121,8 +121,8 @@ test(`Subtract matrices`, () => {
     ]))).toThrow();
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnMatrices(matrixA, matrixB, SUBTRACT)).toEqual(resultA);
-        expect(engine.operateOnMatrices(matrixB, matrixA, SUBTRACT)).toEqual(resultB);
+        expect(engine.operateBinaryMatrices(matrixA, matrixB, SUBTRACT)).toEqual(resultA);
+        expect(engine.operateBinaryMatrices(matrixB, matrixA, SUBTRACT)).toEqual(resultB);
     })
 });
 

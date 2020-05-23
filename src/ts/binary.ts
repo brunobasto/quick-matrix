@@ -20,7 +20,7 @@ export default (
 
     if (shapeA.length === 0 && shapeB.length === 0) {
         // simple scalar multiplication
-        return engine.operateOnScalars(a as Scalar, b as Scalar, operation);
+        return engine.operateBinaryScalars(a as Scalar, b as Scalar, operation);
     }
 
     if (shapeA.length === 0) {
@@ -42,14 +42,14 @@ export default (
         );
     }
 
-    return operateOnArrays(
+    return operateBinaryArrays(
         a as VectorOrMatrix,
         b as VectorOrMatrix,
         operation
     );
 }
 
-const operateOnArrays = (
+const operateBinaryArrays = (
     a: VectorOrMatrix,
     b: VectorOrMatrix,
     operation: Operation
@@ -67,7 +67,7 @@ const operateOnArrays = (
                 `Cannot operate on vectors of dimensions: ${shapeA} and ${shapeB}`);
         }
 
-        return engine.operateOnVectors(
+        return engine.operateBinaryVectors(
             a as Vector,
             b as Vector,
             operation
@@ -76,7 +76,7 @@ const operateOnArrays = (
 
     const [operandA, operandB] = broadcast(a, b);
 
-    return engine.operateOnMatrices(
+    return engine.operateBinaryMatrices(
         operandA as Matrix,
         operandB as Matrix,
         operation
@@ -93,8 +93,8 @@ const operateElementWise = (
     const engine = getBestEngine(shapeA, shapeB);
 
     if (shapeA.length > 1) {
-        return engine.operateOnMatrixAndScalar(a as Matrix, b, operation, reverse);
+        return engine.operateBinaryMatrixAndScalar(a as Matrix, b, operation, reverse);
     }
 
-    return engine.operateOnVectorAndScalar(a as Vector, b, operation, reverse);
+    return engine.operateBinaryVectorAndScalar(a as Vector, b, operation, reverse);
 }

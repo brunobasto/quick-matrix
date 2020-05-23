@@ -24,9 +24,9 @@ const matrix = from([
 test(`Multiply two numbers`, () => {
     expect(multiply(2, 3)).toBe(6);
 
-    expect(gpu.operateOnScalars(2, 3, MULTIPLY)).toBe(6);
-    expect(v8.operateOnScalars(2, 3, MULTIPLY)).toBe(6);
-    expect(wasm.operateOnScalars(2, 3, MULTIPLY)).toBe(6);
+    expect(gpu.operateBinaryScalars(2, 3, MULTIPLY)).toBe(6);
+    expect(v8.operateBinaryScalars(2, 3, MULTIPLY)).toBe(6);
+    expect(wasm.operateBinaryScalars(2, 3, MULTIPLY)).toBe(6);
 });
 
 test(`Multiply a number and a vector`, () => {
@@ -35,9 +35,9 @@ test(`Multiply a number and a vector`, () => {
     expect(multiply(2, vector)).toStrictEqual(result);
     expect(multiply(vector, 2)).toStrictEqual(result);
 
-    expect(gpu.operateOnVectorAndScalar(vector as Vector, 2, MULTIPLY)).toEqual(result);
-    expect(v8.operateOnVectorAndScalar(vector as Vector, 2, MULTIPLY)).toStrictEqual(result);
-    expect(wasm.operateOnVectorAndScalar(vector as Vector, 2, MULTIPLY)).toStrictEqual(result);
+    expect(gpu.operateBinaryVectorAndScalar(vector as Vector, 2, MULTIPLY)).toEqual(result);
+    expect(v8.operateBinaryVectorAndScalar(vector as Vector, 2, MULTIPLY)).toStrictEqual(result);
+    expect(wasm.operateBinaryVectorAndScalar(vector as Vector, 2, MULTIPLY)).toStrictEqual(result);
 });
 
 test(`Multiply a number and a matrix`, () => {
@@ -49,9 +49,9 @@ test(`Multiply a number and a matrix`, () => {
     expect(multiply(2, matrix)).toStrictEqual(result);
     expect(multiply(matrix, 2)).toStrictEqual(result);
 
-    expect(gpu.operateOnMatrixAndScalar(matrix as Matrix, 2, MULTIPLY)).toEqual(result);
-    expect(v8.operateOnMatrixAndScalar(matrix as Matrix, 2, MULTIPLY)).toStrictEqual(result);
-    expect(wasm.operateOnMatrixAndScalar(matrix as Matrix, 2, MULTIPLY)).toStrictEqual(result);
+    expect(gpu.operateBinaryMatrixAndScalar(matrix as Matrix, 2, MULTIPLY)).toEqual(result);
+    expect(v8.operateBinaryMatrixAndScalar(matrix as Matrix, 2, MULTIPLY)).toStrictEqual(result);
+    expect(wasm.operateBinaryMatrixAndScalar(matrix as Matrix, 2, MULTIPLY)).toStrictEqual(result);
 });
 
 test(`Multiply vectors`, () => {
@@ -65,12 +65,12 @@ test(`Multiply vectors`, () => {
     // Incompatible vector operation must throw an error
     expect(() => multiply(vectorA, from([1]))).toThrow();
 
-    expect(gpu.operateOnVectors(vectorA as Vector, vectorB as Vector, MULTIPLY)).toEqual(result);
-    expect(gpu.operateOnVectors(vectorB as Vector, vectorA as Vector, MULTIPLY)).toEqual(result);    
-    expect(v8.operateOnVectors(vectorA as Vector, vectorB as Vector, MULTIPLY)).toStrictEqual(result);
-    expect(v8.operateOnVectors(vectorB as Vector, vectorA as Vector, MULTIPLY)).toStrictEqual(result);
-    expect(wasm.operateOnVectors(vectorA as Vector, vectorB as Vector, MULTIPLY)).toStrictEqual(result);
-    expect(wasm.operateOnVectors(vectorB as Vector, vectorA as Vector, MULTIPLY)).toStrictEqual(result);
+    expect(gpu.operateBinaryVectors(vectorA as Vector, vectorB as Vector, MULTIPLY)).toEqual(result);
+    expect(gpu.operateBinaryVectors(vectorB as Vector, vectorA as Vector, MULTIPLY)).toEqual(result);    
+    expect(v8.operateBinaryVectors(vectorA as Vector, vectorB as Vector, MULTIPLY)).toStrictEqual(result);
+    expect(v8.operateBinaryVectors(vectorB as Vector, vectorA as Vector, MULTIPLY)).toStrictEqual(result);
+    expect(wasm.operateBinaryVectors(vectorA as Vector, vectorB as Vector, MULTIPLY)).toStrictEqual(result);
+    expect(wasm.operateBinaryVectors(vectorB as Vector, vectorA as Vector, MULTIPLY)).toStrictEqual(result);
 });
 
 test(`Multiply matrices`, () => {
@@ -96,12 +96,12 @@ test(`Multiply matrices`, () => {
         [5, 6, 7, 8]
     ]))).toThrow();
 
-    expect(gpu.operateOnMatrices(matrixA as Matrix, matrixB as Matrix, MULTIPLY)).toEqual(result);
-    expect(gpu.operateOnMatrices(matrixB as Matrix, matrixA as Matrix, MULTIPLY)).toEqual(result);
-    expect(v8.operateOnMatrices(matrixA as Matrix, matrixB as Matrix, MULTIPLY)).toStrictEqual(result);
-    expect(v8.operateOnMatrices(matrixB as Matrix, matrixA as Matrix, MULTIPLY)).toStrictEqual(result);
-    expect(wasm.operateOnMatrices(matrixA as Matrix, matrixB as Matrix, MULTIPLY)).toStrictEqual(result);
-    expect(wasm.operateOnMatrices(matrixB as Matrix, matrixA as Matrix, MULTIPLY)).toStrictEqual(result);
+    expect(gpu.operateBinaryMatrices(matrixA as Matrix, matrixB as Matrix, MULTIPLY)).toEqual(result);
+    expect(gpu.operateBinaryMatrices(matrixB as Matrix, matrixA as Matrix, MULTIPLY)).toEqual(result);
+    expect(v8.operateBinaryMatrices(matrixA as Matrix, matrixB as Matrix, MULTIPLY)).toStrictEqual(result);
+    expect(v8.operateBinaryMatrices(matrixB as Matrix, matrixA as Matrix, MULTIPLY)).toStrictEqual(result);
+    expect(wasm.operateBinaryMatrices(matrixA as Matrix, matrixB as Matrix, MULTIPLY)).toStrictEqual(result);
+    expect(wasm.operateBinaryMatrices(matrixB as Matrix, matrixA as Matrix, MULTIPLY)).toStrictEqual(result);
 });
 
 test(`Multiply a vector and a matrix`, () => {

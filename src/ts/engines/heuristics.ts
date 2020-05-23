@@ -18,8 +18,9 @@ const countElements = (shape: Shape) => {
 }
 
 export const getBestEngine = memoize(
-    (shapeA: Shape, shapeB: Shape): Engine => {
-        const cost = countElements(shapeA) + countElements(shapeB);
+    (...shapes: Shape[]): Engine => {
+        const cost = shapes.reduce(
+            (cost, shape) => cost + countElements(shape), 0);
 
         if (cost > 100) {
             return wasm;

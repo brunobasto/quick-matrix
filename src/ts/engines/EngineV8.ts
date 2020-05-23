@@ -2,28 +2,28 @@ import { Engine } from "./Engine";
 import { Matrix, Operation, Vector, Scalar } from "../types";
 
 export default class EngineV8 implements Engine {
-    operateOnMatrices(
+    operateBinaryMatrices(
         a: Matrix,
         b: Matrix,
         operation: Operation
     ): Matrix {
         return a.map((v: Vector, i: Scalar) => {
-            return v.map((n, j) => this.operateOnScalars(n, b[i][j], operation));
+            return v.map((n, j) => this.operateBinaryScalars(n, b[i][j], operation));
         });
     }
 
-    operateOnMatrixAndScalar(
+    operateBinaryMatrixAndScalar(
         a: Matrix,
         b: Scalar,
         operation: Operation,
         reverse: boolean = false
     ): Matrix {
         return a.map((v: Vector) => {
-            return this.operateOnVectorAndScalar(v, b, operation, reverse) as Vector;
+            return this.operateBinaryVectorAndScalar(v, b, operation, reverse) as Vector;
         });
     }
 
-    operateOnScalars(
+    operateBinaryScalars(
         a: Scalar,
         b: Scalar,
         operation: Operation
@@ -40,25 +40,46 @@ export default class EngineV8 implements Engine {
         }
     }
 
-    operateOnVectorAndScalar(
+    operateBinaryVectorAndScalar(
         a: Vector,
         b: Scalar,
         operation: Operation,
         reverse: boolean = false
     ): Vector {
         const operate = (a: Scalar, b: Scalar) => 
-            this.operateOnScalars(a, b, operation);
+            this.operateBinaryScalars(a, b, operation);
 
         return a.map((n: Scalar) =>
             reverse ? operate(b, n) : operate(n, b));
     }
 
-    operateOnVectors(
+    operateBinaryVectors(
         a: Vector,
         b: Vector,
         operation: Operation
     ): Vector {
-        return a.map((n, i) => this.operateOnScalars(n, b[i], operation));
+        return a.map((n, i) => this.operateBinaryScalars(n, b[i], operation));
+    }
+
+    operateUnaryScalar(
+        a: Scalar,
+        operation: Operation
+    ): Scalar {
+        throw new Error('Not implemented');
+    }
+
+    operateUnaryVector(
+        a: Vector,
+        operation: Operation
+    ): Vector {
+        throw new Error('Not implemented');
+    }
+
+    operateUnaryMatrix(
+        a: Matrix,
+        operation: Operation
+    ): Matrix {
+        throw new Error('Not implemented');
     }
 
 }

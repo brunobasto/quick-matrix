@@ -5,7 +5,7 @@
 extern "C" {
 
 EMSCRIPTEN_KEEPALIVE
-inline float operateOnScalars(
+inline float operateBinaryScalars(
     float a,
     float b,
     int operation)
@@ -22,7 +22,7 @@ inline float operateOnScalars(
 }
 
 EMSCRIPTEN_KEEPALIVE
-float* operateOnVectors(
+float* operateBinaryVectors(
     float* a,
     int aSize,
     float* b,
@@ -32,7 +32,7 @@ float* operateOnVectors(
     float result[aSize];
 
     for (int i = 0; i < aSize; i++) {
-        result[i] = operateOnScalars(a[i], b[i], operation);
+        result[i] = operateBinaryScalars(a[i], b[i], operation);
     }
 
     float* arrayPtr = &result[0];
@@ -41,7 +41,7 @@ float* operateOnVectors(
 }
 
 EMSCRIPTEN_KEEPALIVE
-float** operateOnMatrixAndScalar(
+float** operateBinaryMatrixAndScalar(
     float** matrix,
     int rows,
     int columns,
@@ -56,7 +56,7 @@ float** operateOnMatrixAndScalar(
             result[i] = (float*)malloc(columns * sizeof(float));
 
             for (int j = 0; j < columns; j++) {
-                result[i][j] = operateOnScalars(scalar, matrix[i][j], operation);
+                result[i][j] = operateBinaryScalars(scalar, matrix[i][j], operation);
             }
         }
     } else {
@@ -64,7 +64,7 @@ float** operateOnMatrixAndScalar(
             result[i] = (float*)malloc(columns * sizeof(float));
 
             for (int j = 0; j < columns; j++) {
-                result[i][j] = operateOnScalars(matrix[i][j], scalar, operation);
+                result[i][j] = operateBinaryScalars(matrix[i][j], scalar, operation);
             }
         }
     }
@@ -73,7 +73,7 @@ float** operateOnMatrixAndScalar(
 }
 
 EMSCRIPTEN_KEEPALIVE
-float** operateOnMatrices(
+float** operateBinaryMatrices(
     float** matrixA,
     int rowsA,
     int columnsA,
@@ -88,7 +88,7 @@ float** operateOnMatrices(
         result[i] = (float*)malloc(columnsA * sizeof(float));
 
         for (int j = 0; j < columnsA; j++) {
-            result[i][j] = operateOnScalars(matrixA[i][j], matrixB[i][j], operation);
+            result[i][j] = operateBinaryScalars(matrixA[i][j], matrixB[i][j], operation);
         }
     }
 
@@ -96,7 +96,7 @@ float** operateOnMatrices(
 }
 
 EMSCRIPTEN_KEEPALIVE
-float* operateOnVectorAndScalar(
+float* operateBinaryVectorAndScalar(
     float* vector,
     int vectorSize,
     float scalar,
@@ -107,11 +107,11 @@ float* operateOnVectorAndScalar(
 
     if (reverse) {
         for (int i = 0; i < vectorSize; i++) {
-            result[i] = operateOnScalars(scalar, vector[i], operation);
+            result[i] = operateBinaryScalars(scalar, vector[i], operation);
         }
     } else {
         for (int i = 0; i < vectorSize; i++) {
-            result[i] = operateOnScalars(vector[i], scalar, operation);
+            result[i] = operateBinaryScalars(vector[i], scalar, operation);
         }
     }
 

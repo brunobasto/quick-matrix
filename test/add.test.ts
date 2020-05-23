@@ -26,9 +26,9 @@ test(`Add two numbers`, () => {
 
     expect(add(2, 3)).toBe(result);
 
-    expect(gpu.operateOnScalars(2, 3, ADD)).toBe(result);
-    expect(v8.operateOnScalars(2, 3, ADD)).toBe(result);
-    expect(wasm.operateOnScalars(2, 3, ADD)).toBe(result);
+    expect(gpu.operateBinaryScalars(2, 3, ADD)).toBe(result);
+    expect(v8.operateBinaryScalars(2, 3, ADD)).toBe(result);
+    expect(wasm.operateBinaryScalars(2, 3, ADD)).toBe(result);
 });
 
 test(`Add a number and a vector`, () => {
@@ -38,9 +38,9 @@ test(`Add a number and a vector`, () => {
     expect(add(number, vector)).toStrictEqual(result);
     expect(add(vector, number)).toStrictEqual(result);
 
-    expect(gpu.operateOnVectorAndScalar(vector, number, ADD)).toEqual(result);
-    expect(v8.operateOnVectorAndScalar(vector, number, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnVectorAndScalar(vector, number, ADD)).toStrictEqual(result);
+    expect(gpu.operateBinaryVectorAndScalar(vector, number, ADD)).toEqual(result);
+    expect(v8.operateBinaryVectorAndScalar(vector, number, ADD)).toStrictEqual(result);
+    expect(wasm.operateBinaryVectorAndScalar(vector, number, ADD)).toStrictEqual(result);
 });
 
 test(`Add a number and a matrix`, () => {
@@ -53,9 +53,9 @@ test(`Add a number and a matrix`, () => {
     expect(add(number, matrix)).toStrictEqual(result);
     expect(add(matrix, number)).toStrictEqual(result);
 
-    expect(gpu.operateOnMatrixAndScalar(matrix, number, ADD)).toEqual(result);
-    expect(v8.operateOnMatrixAndScalar(matrix, number, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnMatrixAndScalar(matrix, number, ADD)).toStrictEqual(result);
+    expect(gpu.operateBinaryMatrixAndScalar(matrix, number, ADD)).toEqual(result);
+    expect(v8.operateBinaryMatrixAndScalar(matrix, number, ADD)).toStrictEqual(result);
+    expect(wasm.operateBinaryMatrixAndScalar(matrix, number, ADD)).toStrictEqual(result);
 });
 
 test(`Add vectors`, () => {
@@ -69,12 +69,12 @@ test(`Add vectors`, () => {
     // Incompatible vector operation must throw an error
     expect(() => add(vectorA, from([1]))).toThrow();
 
-    expect(gpu.operateOnVectors(vectorA, vectorB, ADD)).toEqual(result);
-    expect(gpu.operateOnVectors(vectorB, vectorA, ADD)).toEqual(result);
-    expect(v8.operateOnVectors(vectorA, vectorB, ADD)).toStrictEqual(result);
-    expect(v8.operateOnVectors(vectorB, vectorA, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnVectors(vectorA, vectorB, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnVectors(vectorB, vectorA, ADD)).toStrictEqual(result);
+    expect(gpu.operateBinaryVectors(vectorA, vectorB, ADD)).toEqual(result);
+    expect(gpu.operateBinaryVectors(vectorB, vectorA, ADD)).toEqual(result);
+    expect(v8.operateBinaryVectors(vectorA, vectorB, ADD)).toStrictEqual(result);
+    expect(v8.operateBinaryVectors(vectorB, vectorA, ADD)).toStrictEqual(result);
+    expect(wasm.operateBinaryVectors(vectorA, vectorB, ADD)).toStrictEqual(result);
+    expect(wasm.operateBinaryVectors(vectorB, vectorA, ADD)).toStrictEqual(result);
 });
 
 test(`Add matrices`, () => {
@@ -100,12 +100,12 @@ test(`Add matrices`, () => {
         [5, 6, 7, 8]
     ]))).toThrow();
 
-    expect(gpu.operateOnMatrices(matrixA, matrixB, ADD)).toEqual(result);
-    expect(gpu.operateOnMatrices(matrixB, matrixA, ADD)).toEqual(result);
-    expect(v8.operateOnMatrices(matrixA, matrixB, ADD)).toStrictEqual(result);
-    expect(v8.operateOnMatrices(matrixB, matrixA, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnMatrices(matrixA, matrixB, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnMatrices(matrixB, matrixA, ADD)).toStrictEqual(result);
+    expect(gpu.operateBinaryMatrices(matrixA, matrixB, ADD)).toEqual(result);
+    expect(gpu.operateBinaryMatrices(matrixB, matrixA, ADD)).toEqual(result);
+    expect(v8.operateBinaryMatrices(matrixA, matrixB, ADD)).toStrictEqual(result);
+    expect(v8.operateBinaryMatrices(matrixB, matrixA, ADD)).toStrictEqual(result);
+    expect(wasm.operateBinaryMatrices(matrixA, matrixB, ADD)).toStrictEqual(result);
+    expect(wasm.operateBinaryMatrices(matrixB, matrixA, ADD)).toStrictEqual(result);
 });
 
 test(`Add a vector and a matrix`, () => {

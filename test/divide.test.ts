@@ -23,8 +23,8 @@ test(`Divide two numbers`, () => {
     expect(divide(operandB, operandA)).toBe(resultB);
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnScalars(operandA, operandB, DIVIDE)).toBe(resultA);
-        expect(engine.operateOnScalars(operandB, operandA, DIVIDE)).toBe(resultB);
+        expect(engine.operateBinaryScalars(operandA, operandB, DIVIDE)).toBe(resultA);
+        expect(engine.operateBinaryScalars(operandB, operandA, DIVIDE)).toBe(resultB);
     });
 });
 
@@ -40,8 +40,8 @@ test(`Divide a number and a vector`, () => {
     expect(divide(vector, number)).toStrictEqual(resultB);
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnVectorAndScalar(vector, number, DIVIDE, true)).toEqual(resultA);
-        expect(engine.operateOnVectorAndScalar(vector, number, DIVIDE, false)).toEqual(resultB);
+        expect(engine.operateBinaryVectorAndScalar(vector, number, DIVIDE, true)).toEqual(resultA);
+        expect(engine.operateBinaryVectorAndScalar(vector, number, DIVIDE, false)).toEqual(resultB);
     })
 });
 
@@ -66,8 +66,8 @@ test(`Divide a number and a matrix`, () => {
     expect(divide(matrix, number)).toStrictEqual(resultB);
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnMatrixAndScalar(matrix, number, DIVIDE, true)).toEqual(resultA);
-        expect(engine.operateOnMatrixAndScalar(matrix, number, DIVIDE, false)).toEqual(resultB);
+        expect(engine.operateBinaryMatrixAndScalar(matrix, number, DIVIDE, true)).toEqual(resultA);
+        expect(engine.operateBinaryMatrixAndScalar(matrix, number, DIVIDE, false)).toEqual(resultB);
     });
 });
 
@@ -86,8 +86,8 @@ test(`Divide vectors`, () => {
     expect(() => divide(vectorA, from([1]))).toThrow();
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnVectors(vectorA, vectorB, DIVIDE)).toEqual(resultA);
-        expect(engine.operateOnVectors(vectorB, vectorA, DIVIDE)).toEqual(resultB);
+        expect(engine.operateBinaryVectors(vectorA, vectorB, DIVIDE)).toEqual(resultA);
+        expect(engine.operateBinaryVectors(vectorB, vectorA, DIVIDE)).toEqual(resultB);
     })
 });
 
@@ -121,8 +121,8 @@ test(`Divide matrices`, () => {
     ]))).toThrow();
 
     forEachEngine((engine: Engine) => {
-        expect(engine.operateOnMatrices(matrixA, matrixB, DIVIDE)).toEqual(resultA);
-        expect(engine.operateOnMatrices(matrixB, matrixA, DIVIDE)).toEqual(resultB);
+        expect(engine.operateBinaryMatrices(matrixA, matrixB, DIVIDE)).toEqual(resultA);
+        expect(engine.operateBinaryMatrices(matrixB, matrixA, DIVIDE)).toEqual(resultB);
     })
 });
 

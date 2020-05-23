@@ -7,7 +7,7 @@ import shape from '../api/shape';
 const gpu = new GPU();
 
 /* istanbul ignore next */
-const operateOnScalarsKernel = gpu.createKernel(
+const operateBinaryScalarsKernel = gpu.createKernel(
     function (a: number, b: number, operator: number) {
         const operandA = a as number;
         const operandB = b as number;
@@ -140,7 +140,7 @@ const makeVectorsKernel = memoize((rows) => {
 });
 
 export default class EngineGPU implements Engine {
-    operateOnMatrices(
+    operateBinaryMatrices(
         a: Matrix,
         b: Matrix,
         operation: Operation
@@ -151,7 +151,7 @@ export default class EngineGPU implements Engine {
         return operate(a as any, b as any, operation) as any;
     }
 
-    operateOnMatrixAndScalar(
+    operateBinaryMatrixAndScalar(
         a: Matrix,
         b: Scalar,
         operation: Operation,
@@ -163,15 +163,15 @@ export default class EngineGPU implements Engine {
         return operate(a as any, b, operation, reverse) as any;
     }
 
-    operateOnScalars(
+    operateBinaryScalars(
         a: Scalar,
         b: Scalar,
         operation: Operation
     ): Scalar {
-        return operateOnScalarsKernel(a, b, operation)[0];
+        return operateBinaryScalarsKernel(a, b, operation)[0];
     }
 
-    operateOnVectorAndScalar(
+    operateBinaryVectorAndScalar(
         a: Vector,
         b: Scalar,
         operation: Operation,
@@ -182,7 +182,7 @@ export default class EngineGPU implements Engine {
         return operate(a, b, operation, reverse) as any;
     }
 
-    operateOnVectors(
+    operateBinaryVectors(
         a: Vector,
         b: Vector,
         operation: Operation
@@ -190,5 +190,26 @@ export default class EngineGPU implements Engine {
         const operate = makeVectorsKernel(a.length);
 
         return operate(a, b, operation) as any;
+    }
+
+    operateUnaryScalar(
+        a: Scalar,
+        operation: Operation
+    ): Scalar {
+        throw new Error('Not implemented');
+    }
+
+    operateUnaryVector(
+        a: Vector,
+        operation: Operation
+    ): Vector {
+        throw new Error('Not implemented');
+    }
+
+    operateUnaryMatrix(
+        a: Matrix,
+        operation: Operation
+    ): Matrix {
+        throw new Error('Not implemented');
     }
 }

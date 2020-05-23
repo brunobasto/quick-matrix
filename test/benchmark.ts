@@ -51,13 +51,13 @@ const benchmark = (
         console.log(`=== scalar x scalar ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnScalars(scalar, scalar, MULTIPLY);
+            wasm.operateBinaryScalars(scalar, scalar, MULTIPLY);
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnScalars(scalar, scalar, MULTIPLY);
+            gpu.operateBinaryScalars(scalar, scalar, MULTIPLY);
         });
         benchmark(`V8`, () => {
-            v8.operateOnScalars(scalar, scalar, MULTIPLY);
+            v8.operateBinaryScalars(scalar, scalar, MULTIPLY);
         });
     }
 
@@ -66,37 +66,37 @@ const benchmark = (
         console.log(`=== vector(${shape(smallVector)}) x scalar ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnVectorAndScalar(smallVector, scalar, MULTIPLY)
+            wasm.operateBinaryVectorAndScalar(smallVector, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnVectorAndScalar(smallVector, scalar, MULTIPLY)
+            gpu.operateBinaryVectorAndScalar(smallVector, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnVectorAndScalar(smallVector, scalar, MULTIPLY)
+            v8.operateBinaryVectorAndScalar(smallVector, scalar, MULTIPLY)
         });
         // medium
         console.log(`=== vector(${shape(mediumVector)}) x scalar ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnVectorAndScalar(mediumVector, scalar, MULTIPLY)
+            wasm.operateBinaryVectorAndScalar(mediumVector, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnVectorAndScalar(mediumVector, scalar, MULTIPLY)
+            gpu.operateBinaryVectorAndScalar(mediumVector, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnVectorAndScalar(mediumVector, scalar, MULTIPLY)
+            v8.operateBinaryVectorAndScalar(mediumVector, scalar, MULTIPLY)
         });
         // large
         console.log(`=== vector(${shape(largeVector)}) x scalar ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnVectorAndScalar(largeVector, scalar, MULTIPLY)
+            wasm.operateBinaryVectorAndScalar(largeVector, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnVectorAndScalar(largeVector, scalar, MULTIPLY)
+            gpu.operateBinaryVectorAndScalar(largeVector, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnVectorAndScalar(largeVector, scalar, MULTIPLY)
+            v8.operateBinaryVectorAndScalar(largeVector, scalar, MULTIPLY)
         });
     }
 
@@ -105,37 +105,37 @@ const benchmark = (
         console.log(`=== vector(${shape(smallVector)}) x vector(${shape(smallVector)}) ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnVectors(smallVector, smallVector, MULTIPLY)
+            wasm.operateBinaryVectors(smallVector, smallVector, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnVectors(smallVector, smallVector, MULTIPLY)
+            gpu.operateBinaryVectors(smallVector, smallVector, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnVectors(smallVector, smallVector, MULTIPLY)
+            v8.operateBinaryVectors(smallVector, smallVector, MULTIPLY)
         });
         // medium
         console.log(`=== vector(${shape(mediumVector)}) x vector(${shape(mediumVector)}) ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnVectors(mediumVector, mediumVector, MULTIPLY)
+            wasm.operateBinaryVectors(mediumVector, mediumVector, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnVectors(mediumVector, mediumVector, MULTIPLY)
+            gpu.operateBinaryVectors(mediumVector, mediumVector, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnVectors(mediumVector, mediumVector, MULTIPLY)
+            v8.operateBinaryVectors(mediumVector, mediumVector, MULTIPLY)
         });
         // large
         console.log(`=== vector(${shape(largeVector)}) x vector(${shape(largeVector)}) ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnVectors(largeVector, largeVector, MULTIPLY)
+            wasm.operateBinaryVectors(largeVector, largeVector, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnVectors(largeVector, largeVector, MULTIPLY)
+            gpu.operateBinaryVectors(largeVector, largeVector, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnVectors(largeVector, largeVector, MULTIPLY)
+            v8.operateBinaryVectors(largeVector, largeVector, MULTIPLY)
         });
     }
 
@@ -144,61 +144,61 @@ const benchmark = (
         console.log(`=== matrix(${shape(smallMatrix)}) x scalar ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrixAndScalar(smallMatrix, scalar, MULTIPLY)
+            wasm.operateBinaryMatrixAndScalar(smallMatrix, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrixAndScalar(smallMatrix, scalar, MULTIPLY)
+            gpu.operateBinaryMatrixAndScalar(smallMatrix, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrixAndScalar(smallMatrix, scalar, MULTIPLY)
+            v8.operateBinaryMatrixAndScalar(smallMatrix, scalar, MULTIPLY)
         });
         // medium
         console.log(`=== matrix(${shape(mediumMatrix)}) x scalar ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrixAndScalar(mediumMatrix, scalar, MULTIPLY)
+            wasm.operateBinaryMatrixAndScalar(mediumMatrix, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrixAndScalar(mediumMatrix, scalar, MULTIPLY)
+            gpu.operateBinaryMatrixAndScalar(mediumMatrix, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrixAndScalar(mediumMatrix, scalar, MULTIPLY)
+            v8.operateBinaryMatrixAndScalar(mediumMatrix, scalar, MULTIPLY)
         });
         // large
         console.log(`=== matrix(${shape(largeMatrix)}) x scalar === `);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrixAndScalar(largeMatrix, scalar, MULTIPLY)
+            wasm.operateBinaryMatrixAndScalar(largeMatrix, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrixAndScalar(largeMatrix, scalar, MULTIPLY)
+            gpu.operateBinaryMatrixAndScalar(largeMatrix, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrixAndScalar(largeMatrix, scalar, MULTIPLY)
+            v8.operateBinaryMatrixAndScalar(largeMatrix, scalar, MULTIPLY)
         });
         // large rows
         console.log(`=== matrix(${shape(largeRowsMatrix)}) x scalar === `);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
+            wasm.operateBinaryMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
+            gpu.operateBinaryMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
+            v8.operateBinaryMatrixAndScalar(largeRowsMatrix, scalar, MULTIPLY)
         });
         // large columns
         console.log(`=== matrix(${shape(largeColumnsMatrix)}) x scalar === `);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
+            wasm.operateBinaryMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
+            gpu.operateBinaryMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
+            v8.operateBinaryMatrixAndScalar(largeColumnsMatrix, scalar, MULTIPLY)
         });
     }
 
@@ -207,37 +207,37 @@ const benchmark = (
         console.log(`=== matrix(${shape(smallMatrix)}) x matrix(${shape(smallMatrix)}) ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrices(smallMatrix, smallMatrix, MULTIPLY)
+            wasm.operateBinaryMatrices(smallMatrix, smallMatrix, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrices(smallMatrix, smallMatrix, MULTIPLY)
+            gpu.operateBinaryMatrices(smallMatrix, smallMatrix, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrices(smallMatrix, smallMatrix, MULTIPLY)
+            v8.operateBinaryMatrices(smallMatrix, smallMatrix, MULTIPLY)
         });
         // medium
         console.log(`=== matrix(${shape(mediumMatrix)}) x matrix(${shape(mediumMatrix)}) ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrices(mediumMatrix, mediumMatrix, MULTIPLY)
+            wasm.operateBinaryMatrices(mediumMatrix, mediumMatrix, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrices(mediumMatrix, mediumMatrix, MULTIPLY)
+            gpu.operateBinaryMatrices(mediumMatrix, mediumMatrix, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrices(mediumMatrix, mediumMatrix, MULTIPLY)
+            v8.operateBinaryMatrices(mediumMatrix, mediumMatrix, MULTIPLY)
         });
         // large
         console.log(`=== matrix(${shape(largeMatrix)}) x matrix(${shape(largeMatrix)}) ===`);
 
         benchmark(`WASM`, () => {
-            wasm.operateOnMatrices(largeMatrix, largeMatrix, MULTIPLY)
+            wasm.operateBinaryMatrices(largeMatrix, largeMatrix, MULTIPLY)
         });
         benchmark(`GPU`, () => {
-            gpu.operateOnMatrices(largeMatrix, largeMatrix, MULTIPLY)
+            gpu.operateBinaryMatrices(largeMatrix, largeMatrix, MULTIPLY)
         });
         benchmark(`V8`, () => {
-            v8.operateOnMatrices(largeMatrix, largeMatrix, MULTIPLY)
+            v8.operateBinaryMatrices(largeMatrix, largeMatrix, MULTIPLY)
         });
     }
 

@@ -5,14 +5,14 @@ import * as Module from '../../../wasm/native';
 import shape from '../api/shape';
 
 export default class EngineWASM implements Engine {
-    operateOnMatrices(
+    operateBinaryMatrices(
         a: Matrix,
         b: Matrix,
         operation: Operation
     ): Matrix {
         return ccallArrays(
             Module,
-            `operateOnMatrices`,
+            `operateBinaryMatrices`,
             'matrix',
             ['matrix', 'matrix'],
             [a, b, operation],
@@ -22,7 +22,7 @@ export default class EngineWASM implements Engine {
         );
     }
 
-    operateOnMatrixAndScalar(
+    operateBinaryMatrixAndScalar(
         a: Matrix,
         b: Scalar,
         operation: Operation,
@@ -30,7 +30,7 @@ export default class EngineWASM implements Engine {
     ): Matrix {
         return ccallArrays(
             Module,
-            `operateOnMatrixAndScalar`,
+            `operateBinaryMatrixAndScalar`,
             'matrix',
             ['matrix', 'number', 'boolean'],
             [a, b, operation, reverse],
@@ -40,14 +40,14 @@ export default class EngineWASM implements Engine {
         );
     }
 
-    operateOnScalars(
+    operateBinaryScalars(
         a: Scalar,
         b: Scalar,
         operation: Operation
     ): Scalar {
         return ccallArrays(
             Module,
-            `operateOnScalars`,
+            `operateBinaryScalars`,
             'number',
             ['number', 'number'],
             [a, b, operation],
@@ -57,7 +57,7 @@ export default class EngineWASM implements Engine {
         );
     }
 
-    operateOnVectorAndScalar(
+    operateBinaryVectorAndScalar(
         a: Vector,
         b: Scalar,
         operation: Operation,
@@ -65,7 +65,7 @@ export default class EngineWASM implements Engine {
     ): Vector {
         return ccallArrays(
             Module,
-            `operateOnVectorAndScalar`,
+            `operateBinaryVectorAndScalar`,
             'vector',
             ['vector', 'number', 'boolean'],
             [a, b, operation, reverse],
@@ -75,14 +75,14 @@ export default class EngineWASM implements Engine {
         );
     }
 
-    operateOnVectors(
+    operateBinaryVectors(
         a: Vector,
         b: Vector,
         operation: Operation
     ): Vector {
         return ccallArrays(
             Module,
-            `operateOnVectors`,
+            `operateBinaryVectors`,
             'vector',
             ['vector', 'vector'],
             [a, b, operation],
@@ -90,5 +90,26 @@ export default class EngineWASM implements Engine {
                 returnShape: shape(a)
             }
         );
+    }
+
+    operateUnaryScalar(
+        a: Scalar,
+        operation: Operation
+    ): Scalar {
+        throw new Error('Not implemented');
+    }
+
+    operateUnaryVector(
+        a: Vector,
+        operation: Operation
+    ): Vector {
+        throw new Error('Not implemented');
+    }
+
+    operateUnaryMatrix(
+        a: Matrix,
+        operation: Operation
+    ): Matrix {
+        throw new Error('Not implemented');
     }
 }
