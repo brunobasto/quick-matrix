@@ -3,6 +3,13 @@ import { VectorOrMatrix, Matrix, Operation, Vector, Value } from './types';
 import broadcast from './broadcast';
 import shape from './api/shape';
 
+const isAssociative = (operation: Operation) => {
+    return (
+        operation === Operation.ADD ||
+        operation === Operation.MULTIPLY
+    );
+}
+
 export default (
     a: Value,
     b: Value,
@@ -21,7 +28,8 @@ export default (
         return operateElementWise(
             b as VectorOrMatrix,
             a as number,
-            operation
+            operation,
+            !isAssociative(operation)
         );
     }
 
@@ -78,7 +86,8 @@ const operateOnArrays = (
 const operateElementWise = (
     a: VectorOrMatrix,
     b: number,
-    operation: Operation
+    operation: Operation,
+    reverse: boolean = false
 ): VectorOrMatrix => {
     const [shapeA, shapeB] = [shape(a), shape(b)];
     const engine = getBestEngine(shapeA, shapeB);
@@ -86,8 +95,8 @@ const operateElementWise = (
     if (shapeA.length > 1) {
         const matrix = a as Matrix;
 
-        return engine.operateOnMatrixAndScalar(matrix, b, operation);
+        return engine.operateOnMatrixAndScalar(matrix, b, operation, reverse);
     }
 
-    return engine.operateOnVectorAndScalar(a as Vector, b, operation);
+    return engine.operateOnVectorAndScalar(a as Vector, b, operation, reverse);
 }

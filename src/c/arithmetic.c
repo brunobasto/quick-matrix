@@ -1,4 +1,5 @@
 #include <emscripten.h>
+#include <stdbool.h>
 #include <stdlib.h>
 
 EMSCRIPTEN_KEEPALIVE
@@ -43,15 +44,26 @@ float** operateOnMatrixAndScalar(
     int rows,
     int columns,
     float scalar,
-    int operation)
+    int operation,
+    bool reverse)
 {
     float** result = malloc(rows * sizeof(float*));
 
-    for (int i = 0; i < rows; i++) {
-        result[i] = malloc(columns * sizeof(float));
+    if (reverse) {
+        for (int i = 0; i < rows; i++) {
+            result[i] = malloc(columns * sizeof(float));
 
-        for (int j = 0; j < columns; j++) {
-            result[i][j] = operateOnScalars(scalar, matrix[i][j], operation);
+            for (int j = 0; j < columns; j++) {
+                result[i][j] = operateOnScalars(scalar, matrix[i][j], operation);
+            }
+        }
+    } else {
+        for (int i = 0; i < rows; i++) {
+            result[i] = malloc(columns * sizeof(float));
+
+            for (int j = 0; j < columns; j++) {
+                result[i][j] = operateOnScalars(matrix[i][j], scalar, operation);
+            }
         }
     }
 
@@ -86,12 +98,19 @@ float* operateOnVectorAndScalar(
     float* vector,
     int vectorSize,
     float scalar,
-    int operation)
+    int operation,
+    bool reverse)
 {
     float result[vectorSize];
 
-    for (int i = 0; i < vectorSize; i++) {
-        result[i] = operateOnScalars(scalar, vector[i], operation);
+    if (reverse) {
+        for (int i = 0; i < vectorSize; i++) {
+            result[i] = operateOnScalars(scalar, vector[i], operation);
+        }
+    } else {
+        for (int i = 0; i < vectorSize; i++) {
+            result[i] = operateOnScalars(vector[i], scalar, operation);
+        }
     }
 
     float* arrayPtr = &result[0];

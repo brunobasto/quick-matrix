@@ -9,7 +9,8 @@ export interface Engine {
     operateOnMatrixAndScalar: (
         a: Matrix,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean
     ) => Matrix;
     operateOnScalars: (
         a: number,
@@ -19,7 +20,8 @@ export interface Engine {
     operateOnVectorAndScalar: (
         a: Vector,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean
     ) => Vector;
     operateOnVectors: (
         a: Vector,

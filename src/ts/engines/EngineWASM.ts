@@ -25,14 +25,15 @@ export default class EngineWASM implements Engine {
     operateOnMatrixAndScalar(
         a: Matrix,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean = false
     ): Matrix {
         return ccallArrays(
             Module,
             `operateOnMatrixAndScalar`,
             'matrix',
-            ['matrix', 'number'],
-            [a, b, operation],
+            ['matrix', 'number', 'boolean'],
+            [a, b, operation, reverse],
             {
                 returnShape: shape(a)
             }
@@ -59,14 +60,15 @@ export default class EngineWASM implements Engine {
     operateOnVectorAndScalar(
         a: Vector,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean = false
     ): Vector {
         return ccallArrays(
             Module,
             `operateOnVectorAndScalar`,
             'vector',
-            ['vector', 'number'],
-            [a, b, operation],
+            ['vector', 'number', 'boolean'],
+            [a, b, operation, reverse],
             {
                 returnShape: shape(a)
             }

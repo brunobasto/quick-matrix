@@ -15,10 +15,11 @@ export default class EngineV8 implements Engine {
     operateOnMatrixAndScalar(
         a: Matrix,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean = false
     ): Matrix {
         return a.map((v: Vector) => {
-            return this.operateOnVectorAndScalar(v, b, operation) as Vector;
+            return this.operateOnVectorAndScalar(v, b, operation, reverse) as Vector;
         });
     }
 
@@ -42,9 +43,14 @@ export default class EngineV8 implements Engine {
     operateOnVectorAndScalar(
         a: Vector,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean = false
     ): Vector {
-        return a.map((n: number) => this.operateOnScalars(n, b, operation));
+        const operate = (a: number, b: number) => 
+            this.operateOnScalars(a, b, operation);
+
+        return a.map((n: number) =>
+            reverse ? operate(b, n) : operate(n, b));
     }
 
     operateOnVectors(

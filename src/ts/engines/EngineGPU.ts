@@ -32,9 +32,14 @@ const operateOnScalarsKernel = gpu.createKernel(
 const makeMatrixByScalarKernel = memoize((rows, columns) => {
     /* istanbul ignore next */
     return gpu.createKernel(
-        function (a: number[][], b: number, operator: number) {
-            const operandA = a[this.thread.y as number][this.thread.x as number];
-            const operandB = b;
+        function (
+            a: number[][],
+            b: number,
+            operator: number,
+            reverse: boolean
+        ) {
+            const operandA = reverse ? b : a[this.thread.y as number][this.thread.x as number];
+            const operandB = reverse ? a[this.thread.y as number][this.thread.x as number] : b;
 
             if (operator === 0) {
                 return operandA + operandB;
@@ -82,9 +87,14 @@ const makeMatricesKernel = memoize((rows, columns) => {
 const makeVectorByScalarKernel = memoize(rows => {
     /* istanbul ignore next */
     return gpu.createKernel(
-        function (a: number[], b: number, operator: number) {
-            const operandA = a[this.thread.x] as number;
-            const operandB = b as number;
+        function (
+            a: number[],
+            b: number,
+            operator: number,
+            reverse: boolean
+        ) {
+            const operandA = reverse ? b as number : a[this.thread.x] as number;
+            const operandB = reverse ? a[this.thread.x] as number : b as number;
 
             if (operator === 0) {
                 return operandA + operandB;
@@ -144,12 +154,13 @@ export default class EngineGPU implements Engine {
     operateOnMatrixAndScalar(
         a: Matrix,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean = false
     ): Matrix {
         const [rows, columns] = shape(a);
         const operate = makeMatrixByScalarKernel(rows, columns);
 
-        return operate(a as any, b, operation) as any;
+        return operate(a as any, b, operation, reverse) as any;
     }
 
     operateOnScalars(
@@ -163,11 +174,12 @@ export default class EngineGPU implements Engine {
     operateOnVectorAndScalar(
         a: Vector,
         b: number,
-        operation: Operation
+        operation: Operation,
+        reverse: boolean = false
     ): Vector {
         const operate = makeVectorByScalarKernel(a.length);
 
-        return operate(a, b, operation) as any;
+        return operate(a, b, operation, reverse) as any;
     }
 
     operateOnVectors(
