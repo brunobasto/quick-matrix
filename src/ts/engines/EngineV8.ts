@@ -38,6 +38,8 @@ export default class EngineV8 implements Engine {
             case Operation.SUBTRACT:
                 return a - b;
         }
+
+        throw new Error('Not implemented');
     }
 
     operateBinaryVectorAndScalar(
@@ -46,7 +48,7 @@ export default class EngineV8 implements Engine {
         operation: Operation,
         reverse: boolean = false
     ): Vector {
-        const operate = (a: Scalar, b: Scalar) => 
+        const operate = (a: Scalar, b: Scalar) =>
             this.operateBinaryScalars(a, b, operation);
 
         return a.map((n: Scalar) =>
@@ -65,6 +67,11 @@ export default class EngineV8 implements Engine {
         a: Scalar,
         operation: Operation
     ): Scalar {
+        switch (operation) {
+            case Operation.EXP:
+                return Math.exp(a);
+        }
+
         throw new Error('Not implemented');
     }
 
@@ -72,14 +79,14 @@ export default class EngineV8 implements Engine {
         a: Vector,
         operation: Operation
     ): Vector {
-        throw new Error('Not implemented');
+        return a.map(n => this.operateUnaryScalar(n, operation));
     }
 
     operateUnaryMatrix(
         a: Matrix,
         operation: Operation
     ): Matrix {
-        throw new Error('Not implemented');
+        return a.map(v => this.operateUnaryVector(v, operation));
     }
 
 }

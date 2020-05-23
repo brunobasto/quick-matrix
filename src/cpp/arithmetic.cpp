@@ -1,8 +1,60 @@
 #include <emscripten.h>
+#include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
 extern "C" {
+
+EMSCRIPTEN_KEEPALIVE
+inline float operateUnaryScalar(
+    float a,
+    int operation)
+{
+    if (operation == 4) {
+        return exp(a);
+    }
+
+    return a;
+}
+
+EMSCRIPTEN_KEEPALIVE
+inline float* operateUnaryVector(
+    float* a,
+    int aSize,
+    int operation)
+{
+    float result[aSize];
+
+    for (int i = 0; i < aSize; i++) {
+        if (operation == 4) {
+            result[i] = operateUnaryScalar(a[i], operation);
+        }
+    }
+
+    float* arrayPtr = &result[0];
+
+    return arrayPtr;
+}
+
+EMSCRIPTEN_KEEPALIVE
+inline float** operateUnaryMatrix(
+    float** a,
+    int rows,
+    int columns,
+    int operation)
+{
+    float** result = (float**)malloc(rows * sizeof(float*));
+
+    for (int i = 0; i < rows; i++) {
+        result[i] = (float*)malloc(columns * sizeof(float));
+
+        for (int j = 0; j < columns; j++) {
+            result[i][j] = operateUnaryScalar(a[i][j], operation);
+        }
+    }
+
+    return result;
+}
 
 EMSCRIPTEN_KEEPALIVE
 inline float operateBinaryScalars(

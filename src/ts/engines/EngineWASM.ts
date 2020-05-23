@@ -96,20 +96,47 @@ export default class EngineWASM implements Engine {
         a: Scalar,
         operation: Operation
     ): Scalar {
-        throw new Error('Not implemented');
+        return ccallArrays(
+            Module,
+            `operateUnaryScalar`,
+            'number',
+            ['number', 'number'],
+            [a, operation],
+            {
+                returnShape: shape(a)
+            }
+        );
     }
 
     operateUnaryVector(
         a: Vector,
         operation: Operation
     ): Vector {
-        throw new Error('Not implemented');
+        return ccallArrays(
+            Module,
+            `operateUnaryVector`,
+            'vector',
+            ['vector', 'number'],
+            [a, operation],
+            {
+                returnShape: shape(a)
+            }
+        );
     }
 
     operateUnaryMatrix(
         a: Matrix,
         operation: Operation
     ): Matrix {
-        throw new Error('Not implemented');
+        return ccallArrays(
+            Module,
+            `operateUnaryMatrix`,
+            'matrix',
+            ['matrix', 'number'],
+            [a, operation],
+            {
+                returnShape: shape(a)
+            }
+        );
     }
 }
