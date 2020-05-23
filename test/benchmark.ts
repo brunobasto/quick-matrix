@@ -1,6 +1,5 @@
-import { Operation } from '../src/ts/engines/Engine';
 import { fill } from '../src/ts/api/fill';
-import { Matrix, Vector } from '../src/ts/types';
+import { Matrix, Operation, Vector } from '../src/ts/types';
 import countdown from 'countdown';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';

@@ -1,6 +1,5 @@
 import { getBestEngine } from './engines/heuristics';
-import { Operation } from './engines/Engine';
-import { VectorOrMatrix, Matrix, Vector, Value } from './types';
+import { VectorOrMatrix, Matrix, Operation, Vector, Value } from './types';
 import broadcast from './broadcast';
 import shape from './api/shape';
 

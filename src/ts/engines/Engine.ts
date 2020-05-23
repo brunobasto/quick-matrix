@@ -1,11 +1,4 @@
-import { Matrix, Vector } from "../types";
-
-export enum Operation {
-    ADD,
-    DIVIDE,
-    MULTIPLY,
-    SUBTRACT,
-}
+import { Matrix, Operation, Vector } from "../types";
 
 export interface Engine {
     operateOnMatrices: (

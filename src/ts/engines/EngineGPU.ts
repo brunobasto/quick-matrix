@@ -1,6 +1,6 @@
-import { Engine, Operation } from './Engine';
+import { Engine } from './Engine';
 import { GPU } from 'gpu.js';
-import { Matrix, Vector } from '../types';
+import { Matrix, Operation, Vector } from '../types';
 import memoize from 'fast-memoize';
 import shape from '../api/shape';
 

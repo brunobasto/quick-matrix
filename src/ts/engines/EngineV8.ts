@@ -1,5 +1,5 @@
-import { Engine, Operation } from "./Engine";
-import { Matrix, Vector } from "../types";
+import { Engine } from "./Engine";
+import { Matrix, Operation, Vector } from "../types";
 
 export default class EngineV8 implements Engine {
     operateOnMatrices(

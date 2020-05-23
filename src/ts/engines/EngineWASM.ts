@@ -1,6 +1,6 @@
 import { ccallArrays } from '../wasm';
-import { Engine, Operation } from './Engine';
-import { Matrix, Vector } from '../types';
+import { Engine } from './Engine';
+import { Matrix, Operation, Vector } from '../types';
 import * as Module from '../../../wasm/native';
 import shape from '../api/shape';
 
