@@ -21,7 +21,7 @@ multiply(vector, matrix);
 yarn benchmark
 ```
 
-![](https://github.com/brunobasto/quick-matrix/assets/benchmarks.png)
+![](https://github.com/brunobasto/quick-matrix/blob/master/assets/benchmarks.png?raw=true)
 
 Durations are measured for a thousand of operations.
 
