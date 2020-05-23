@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { ArithmeticOperation } from '../src/ts/engines/Engine';
+import { Operation } from '../src/ts/engines/Engine';
 import { from } from '../src/ts/api/from';
 import { Vector, Matrix } from '../src/ts/types';
 import add from '../src/ts/api/add';
@@ -14,7 +14,7 @@ const gpu = new EngineGPU();
 const v8 = new EngineV8();
 const wasm = new EngineWASM();
 
-const { ADD } = ArithmeticOperation;
+const { ADD } = Operation;
 
 const vector = from([1, 2, 3]) as Vector;
 const matrix = from([
@@ -67,7 +67,7 @@ test(`Add vectors`, () => {
     expect(add(vectorA, vectorB)).toStrictEqual(result);
     expect(add(vectorB, vectorA)).toStrictEqual(result);
 
-    // Incompatible vector multiplication must throw an error
+    // Incompatible vector operation must throw an error
     expect(() => add(vectorA, from([1]))).toThrow();
 
     expect(gpu.operateOnVectors(vectorA, vectorB, ADD)).toEqual(result);
@@ -95,7 +95,7 @@ test(`Add matrices`, () => {
     expect(add(matrixA, matrixB)).toStrictEqual(result);
     expect(add(matrixB, matrixA)).toStrictEqual(result);
 
-    // Incompatible matrix multiplication must throw an error
+    // Incompatible matrix operation must throw an error
     expect(() => add(matrixB, from([
         [1, 2, 3, 4],
         [5, 6, 7, 8]

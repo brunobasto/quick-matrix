@@ -1,11 +1,11 @@
-import { Engine, ArithmeticOperation } from "./Engine";
+import { Engine, Operation } from "./Engine";
 import { Matrix, Vector } from "../types";
 
 export default class EngineV8 implements Engine {
     operateOnMatrices(
         a: Matrix,
         b: Matrix,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Matrix {
         return a.map((v: Vector, i: number) => {
             return v.map((n, j) => this.operateOnScalars(n, b[i][j], operation));
@@ -15,7 +15,7 @@ export default class EngineV8 implements Engine {
     operateOnMatrixAndScalar(
         a: Matrix,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Matrix {
         return a.map((v: Vector) => {
             return this.operateOnVectorAndScalar(v, b, operation) as Vector;
@@ -25,16 +25,16 @@ export default class EngineV8 implements Engine {
     operateOnScalars(
         a: number,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): number {
         switch (operation) {
-            case ArithmeticOperation.ADD:
+            case Operation.ADD:
                 return a + b;
-            case ArithmeticOperation.DIVIDE:
+            case Operation.DIVIDE:
                 return a / b;
-            case ArithmeticOperation.MULTIPLY:
+            case Operation.MULTIPLY:
                 return a * b;
-            case ArithmeticOperation.SUBTRACT:
+            case Operation.SUBTRACT:
                 return a - b;
         }
     }
@@ -42,7 +42,7 @@ export default class EngineV8 implements Engine {
     operateOnVectorAndScalar(
         a: Vector,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Vector {
         return a.map((n: number) => this.operateOnScalars(n, b, operation));
     }
@@ -50,7 +50,7 @@ export default class EngineV8 implements Engine {
     operateOnVectors(
         a: Vector,
         b: Vector,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Vector {
         return a.map((n, i) => this.operateOnScalars(n, b[i], operation));
     }

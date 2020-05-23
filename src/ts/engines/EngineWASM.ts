@@ -1,5 +1,5 @@
-import { Engine, ArithmeticOperation } from './Engine';
 import { ccallArrays } from '../wasm';
+import { Engine, Operation } from './Engine';
 import { Matrix, Vector } from '../types';
 import * as Module from '../../../wasm/native';
 import shape from '../api/shape';
@@ -8,7 +8,7 @@ export default class EngineWASM implements Engine {
     operateOnMatrices(
         a: Matrix,
         b: Matrix,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Matrix {
         return ccallArrays(
             Module,
@@ -25,7 +25,7 @@ export default class EngineWASM implements Engine {
     operateOnMatrixAndScalar(
         a: Matrix,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Matrix {
         return ccallArrays(
             Module,
@@ -42,7 +42,7 @@ export default class EngineWASM implements Engine {
     operateOnScalars(
         a: number,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): number {
         return ccallArrays(
             Module,
@@ -59,7 +59,7 @@ export default class EngineWASM implements Engine {
     operateOnVectorAndScalar(
         a: Vector,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Vector {
         return ccallArrays(
             Module,
@@ -76,7 +76,7 @@ export default class EngineWASM implements Engine {
     operateOnVectors(
         a: Vector,
         b: Vector,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Vector {
         return ccallArrays(
             Module,

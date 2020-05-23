@@ -1,6 +1,6 @@
 import { Matrix, Vector } from "../types";
 
-export enum ArithmeticOperation {
+export enum Operation {
     ADD,
     DIVIDE,
     MULTIPLY,
@@ -11,26 +11,26 @@ export interface Engine {
     operateOnMatrices: (
         a: Matrix,
         b: Matrix,
-        operation: ArithmeticOperation
+        operation: Operation
     ) => Matrix;
     operateOnMatrixAndScalar: (
         a: Matrix,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ) => Matrix;
     operateOnScalars: (
         a: number,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ) => number;
     operateOnVectorAndScalar: (
         a: Vector,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ) => Vector;
     operateOnVectors: (
         a: Vector,
         b: Vector,
-        operation: ArithmeticOperation
+        operation: Operation
     ) => Vector;
 }

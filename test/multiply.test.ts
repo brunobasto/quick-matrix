@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { ArithmeticOperation } from '../src/ts/engines/Engine';
+import { Operation } from '../src/ts/engines/Engine';
 import { from } from '../src/ts/api/from';
 import { Vector, Matrix } from '../src/ts/types';
 import EngineGPU from '../src/ts/engines/EngineGPU';
@@ -14,7 +14,7 @@ const gpu = new EngineGPU();
 const v8 = new EngineV8();
 const wasm = new EngineWASM();
 
-const { MULTIPLY } = ArithmeticOperation;
+const { MULTIPLY } = Operation;
 
 const vector = from([1, 2, 3]);
 const matrix = from([
@@ -63,7 +63,7 @@ test(`Multiply vectors`, () => {
     expect(multiply(vectorA, vectorB)).toStrictEqual(result);
     expect(multiply(vectorB, vectorA)).toStrictEqual(result);
 
-    // Incompatible vector multiplication must throw an error
+    // Incompatible vector operation must throw an error
     expect(() => multiply(vectorA, from([1]))).toThrow();
 
     expect(gpu.operateOnVectors(vectorA as Vector, vectorB as Vector, MULTIPLY)).toEqual(result);
@@ -91,7 +91,7 @@ test(`Multiply matrices`, () => {
     expect(multiply(matrixA, matrixB)).toStrictEqual(result);
     expect(multiply(matrixB, matrixA)).toStrictEqual(result);
 
-    // Incompatible matrix multiplication must throw an error
+    // Incompatible matrix operation must throw an error
     expect(() => multiply(matrixB, from([
         [1, 2, 3, 4],
         [5, 6, 7, 8]

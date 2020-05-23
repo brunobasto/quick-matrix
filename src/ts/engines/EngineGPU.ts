@@ -1,4 +1,4 @@
-import { Engine, ArithmeticOperation } from './Engine';
+import { Engine, Operation } from './Engine';
 import { GPU } from 'gpu.js';
 import { Matrix, Vector } from '../types';
 import memoize from 'fast-memoize';
@@ -133,7 +133,7 @@ export default class EngineGPU implements Engine {
     operateOnMatrices(
         a: Matrix,
         b: Matrix,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Matrix {
         const [rows, columns] = shape(a);
         const operate = makeMatricesKernel(rows, columns);
@@ -144,7 +144,7 @@ export default class EngineGPU implements Engine {
     operateOnMatrixAndScalar(
         a: Matrix,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Matrix {
         const [rows, columns] = shape(a);
         const operate = makeMatrixByScalarKernel(rows, columns);
@@ -155,7 +155,7 @@ export default class EngineGPU implements Engine {
     operateOnScalars(
         a: number,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): number {
         return operateOnScalarsKernel(a, b, operation)[0];
     }
@@ -163,7 +163,7 @@ export default class EngineGPU implements Engine {
     operateOnVectorAndScalar(
         a: Vector,
         b: number,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Vector {
         const operate = makeVectorByScalarKernel(a.length);
 
@@ -173,7 +173,7 @@ export default class EngineGPU implements Engine {
     operateOnVectors(
         a: Vector,
         b: Vector,
-        operation: ArithmeticOperation
+        operation: Operation
     ): Vector {
         const operate = makeVectorsKernel(a.length);
 

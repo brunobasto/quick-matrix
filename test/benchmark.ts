@@ -1,4 +1,4 @@
-import { ArithmeticOperation } from '../src/ts/engines/Engine';
+import { Operation } from '../src/ts/engines/Engine';
 import { fill } from '../src/ts/api/fill';
 import { Matrix, Vector } from '../src/ts/types';
 import countdown from 'countdown';
@@ -32,7 +32,7 @@ const benchmark = (
 }
 
 (() => {
-    const { MULTIPLY } = ArithmeticOperation;
+    const { MULTIPLY } = Operation;
 
     const gpu = new EngineGPU();
     const wasm = new EngineWASM();

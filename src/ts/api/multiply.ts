@@ -1,11 +1,11 @@
-import { ArithmeticOperation } from '../engines/Engine';
+import { Operation } from '../engines/Engine';
 import { Value } from '../types';
-import broadcast from '../broadcast';
+import binary from '../binary';
 
 export default (a: Value, b: Value): Value => {
-    return broadcast(
+    return binary(
         a,
         b,
-        ArithmeticOperation.MULTIPLY
+        Operation.MULTIPLY
     );
 }
