@@ -1,4 +1,4 @@
-import { Matrix, Operation, Vector } from "../types";
+import { Matrix, Operation, Vector, Scalar } from "../types";
 
 export interface Engine {
     operateOnMatrices: (
@@ -8,18 +8,18 @@ export interface Engine {
     ) => Matrix;
     operateOnMatrixAndScalar: (
         a: Matrix,
-        b: number,
+        b: Scalar,
         operation: Operation,
         reverse: boolean
     ) => Matrix;
     operateOnScalars: (
-        a: number,
-        b: number,
+        a: Scalar,
+        b: Scalar,
         operation: Operation
-    ) => number;
+    ) => Scalar;
     operateOnVectorAndScalar: (
         a: Vector,
-        b: number,
+        b: Scalar,
         operation: Operation,
         reverse: boolean
     ) => Vector;

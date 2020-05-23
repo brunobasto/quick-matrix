@@ -1,4 +1,4 @@
-import { Value } from "../types";
+import { Value, Scalar } from "../types";
 
 export const from = (value: any): Value => {
     if (value instanceof Float32Array) {
@@ -21,5 +21,5 @@ export const from = (value: any): Value => {
         return new Float32Array(value);
     }
     
-    return value as number;
+    return value as Scalar;
 }

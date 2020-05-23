@@ -1,6 +1,6 @@
 import { Engine } from './Engine';
 import { GPU } from 'gpu.js';
-import { Matrix, Operation, Vector } from '../types';
+import { Matrix, Operation, Vector, Scalar } from '../types';
 import memoize from 'fast-memoize';
 import shape from '../api/shape';
 
@@ -153,7 +153,7 @@ export default class EngineGPU implements Engine {
 
     operateOnMatrixAndScalar(
         a: Matrix,
-        b: number,
+        b: Scalar,
         operation: Operation,
         reverse: boolean = false
     ): Matrix {
@@ -164,16 +164,16 @@ export default class EngineGPU implements Engine {
     }
 
     operateOnScalars(
-        a: number,
-        b: number,
+        a: Scalar,
+        b: Scalar,
         operation: Operation
-    ): number {
+    ): Scalar {
         return operateOnScalarsKernel(a, b, operation)[0];
     }
 
     operateOnVectorAndScalar(
         a: Vector,
-        b: number,
+        b: Scalar,
         operation: Operation,
         reverse: boolean = false
     ): Vector {

@@ -1,5 +1,5 @@
 import { Engine } from "./Engine";
-import { Matrix, Operation, Vector } from "../types";
+import { Matrix, Operation, Vector, Scalar } from "../types";
 
 export default class EngineV8 implements Engine {
     operateOnMatrices(
@@ -7,14 +7,14 @@ export default class EngineV8 implements Engine {
         b: Matrix,
         operation: Operation
     ): Matrix {
-        return a.map((v: Vector, i: number) => {
+        return a.map((v: Vector, i: Scalar) => {
             return v.map((n, j) => this.operateOnScalars(n, b[i][j], operation));
         });
     }
 
     operateOnMatrixAndScalar(
         a: Matrix,
-        b: number,
+        b: Scalar,
         operation: Operation,
         reverse: boolean = false
     ): Matrix {
@@ -24,10 +24,10 @@ export default class EngineV8 implements Engine {
     }
 
     operateOnScalars(
-        a: number,
-        b: number,
+        a: Scalar,
+        b: Scalar,
         operation: Operation
-    ): number {
+    ): Scalar {
         switch (operation) {
             case Operation.ADD:
                 return a + b;
@@ -42,14 +42,14 @@ export default class EngineV8 implements Engine {
 
     operateOnVectorAndScalar(
         a: Vector,
-        b: number,
+        b: Scalar,
         operation: Operation,
         reverse: boolean = false
     ): Vector {
-        const operate = (a: number, b: number) => 
+        const operate = (a: Scalar, b: Scalar) => 
             this.operateOnScalars(a, b, operation);
 
-        return a.map((n: number) =>
+        return a.map((n: Scalar) =>
             reverse ? operate(b, n) : operate(n, b));
     }
 

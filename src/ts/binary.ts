@@ -1,5 +1,5 @@
 import { getBestEngine } from './engines/heuristics';
-import { VectorOrMatrix, Matrix, Operation, Vector, Value } from './types';
+import { VectorOrMatrix, Matrix, Operation, Vector, Value, Scalar } from './types';
 import broadcast from './broadcast';
 import shape from './api/shape';
 
@@ -19,15 +19,15 @@ export default (
     const engine = getBestEngine(shapeA, shapeB);
 
     if (shapeA.length === 0 && shapeB.length === 0) {
-        // simple number multiplication
-        return engine.operateOnScalars(a as number, b as number, operation);
+        // simple scalar multiplication
+        return engine.operateOnScalars(a as Scalar, b as Scalar, operation);
     }
 
     if (shapeA.length === 0) {
         // a is a scalar and b is not
         return operateElementWise(
             b as VectorOrMatrix,
-            a as number,
+            a as Scalar,
             operation,
             !isAssociative(operation)
         );
@@ -37,7 +37,7 @@ export default (
         // b is a scalar and a is not
         return operateElementWise(
             a as VectorOrMatrix,
-            b as number,
+            b as Scalar,
             operation
         );
     }
@@ -85,7 +85,7 @@ const operateOnArrays = (
 
 const operateElementWise = (
     a: VectorOrMatrix,
-    b: number,
+    b: Scalar,
     operation: Operation,
     reverse: boolean = false
 ): VectorOrMatrix => {
@@ -93,9 +93,7 @@ const operateElementWise = (
     const engine = getBestEngine(shapeA, shapeB);
 
     if (shapeA.length > 1) {
-        const matrix = a as Matrix;
-
-        return engine.operateOnMatrixAndScalar(matrix, b, operation, reverse);
+        return engine.operateOnMatrixAndScalar(a as Matrix, b, operation, reverse);
     }
 
     return engine.operateOnVectorAndScalar(a as Vector, b, operation, reverse);
