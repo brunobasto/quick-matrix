@@ -9,7 +9,9 @@ const matrix = from([
     [4, 5, 6]
 ]);
 
-multiply(vector, matrix);
+const result = multiply(vector, matrix);
+console.log(result);
+// outputs: [[1, 4, 9], [4, 10, 18]]
 ```
 
 Right now the API for the operations (`add()`, `multiply()`, `subtract()` and etc) expects that vectors (and columns of a matrix) are of type `Float32Array`. Initially I made it so that it would accept just plain old JavaScript number arrays. But it turns out that there's a performance drawback to that because I need to convert it to a typed array before interfacing with either WASM or GPU.js. In the near future I will make so that I can internally make the necessary conversions if the right type is not passed. When I do that, the will be no need to initialize with `from()`.
