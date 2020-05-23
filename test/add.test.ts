@@ -16,11 +16,11 @@ const wasm = new EngineWASM();
 
 const { ADD } = ArithmeticOperation;
 
-const vector = from([1, 2, 3]);
+const vector = from([1, 2, 3]) as Vector;
 const matrix = from([
     [1, 2, 3],
     [4, 5, 6]
-]);
+]) as Matrix;
 
 test(`Add two numbers`, () => {
     const result = 5;
@@ -39,9 +39,9 @@ test(`Add a number and a vector`, () => {
     expect(add(number, vector)).toStrictEqual(result);
     expect(add(vector, number)).toStrictEqual(result);
 
-    expect(gpu.operateOnVectorAndScalar(vector as Vector, number, ADD)).toEqual(result);
-    expect(v8.operateOnVectorAndScalar(vector as Vector, number, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnVectorAndScalar(vector as Vector, number, ADD)).toStrictEqual(result);
+    expect(gpu.operateOnVectorAndScalar(vector, number, ADD)).toEqual(result);
+    expect(v8.operateOnVectorAndScalar(vector, number, ADD)).toStrictEqual(result);
+    expect(wasm.operateOnVectorAndScalar(vector, number, ADD)).toStrictEqual(result);
 });
 
 test(`Add a number and a matrix`, () => {
@@ -54,15 +54,15 @@ test(`Add a number and a matrix`, () => {
     expect(add(number, matrix)).toStrictEqual(result);
     expect(add(matrix, number)).toStrictEqual(result);
 
-    expect(gpu.operateOnMatrixAndScalar(matrix as Matrix, number, ADD)).toEqual(result);
-    expect(v8.operateOnMatrixAndScalar(matrix as Matrix, number, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnMatrixAndScalar(matrix as Matrix, number, ADD)).toStrictEqual(result);
+    expect(gpu.operateOnMatrixAndScalar(matrix, number, ADD)).toEqual(result);
+    expect(v8.operateOnMatrixAndScalar(matrix, number, ADD)).toStrictEqual(result);
+    expect(wasm.operateOnMatrixAndScalar(matrix, number, ADD)).toStrictEqual(result);
 });
 
 test(`Add vectors`, () => {
-    const vectorA = from([2, 3, 4]);
-    const vectorB = from([5, 6, 7]);
-    const result = from([7, 9, 11]);
+    const vectorA = from([2, 3, 4]) as Vector;
+    const vectorB = from([5, 6, 7]) as Vector;
+    const result = from([7, 9, 11]) as Vector;
 
     expect(add(vectorA, vectorB)).toStrictEqual(result);
     expect(add(vectorB, vectorA)).toStrictEqual(result);
@@ -70,27 +70,27 @@ test(`Add vectors`, () => {
     // Incompatible vector multiplication must throw an error
     expect(() => add(vectorA, from([1]))).toThrow();
 
-    expect(gpu.operateOnVectors(vectorA as Vector, vectorB as Vector, ADD)).toEqual(result);
-    expect(gpu.operateOnVectors(vectorB as Vector, vectorA as Vector, ADD)).toEqual(result);
-    expect(v8.operateOnVectors(vectorA as Vector, vectorB as Vector, ADD)).toStrictEqual(result);
-    expect(v8.operateOnVectors(vectorB as Vector, vectorA as Vector, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnVectors(vectorA as Vector, vectorB as Vector, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnVectors(vectorB as Vector, vectorA as Vector, ADD)).toStrictEqual(result);
+    expect(gpu.operateOnVectors(vectorA, vectorB, ADD)).toEqual(result);
+    expect(gpu.operateOnVectors(vectorB, vectorA, ADD)).toEqual(result);
+    expect(v8.operateOnVectors(vectorA, vectorB, ADD)).toStrictEqual(result);
+    expect(v8.operateOnVectors(vectorB, vectorA, ADD)).toStrictEqual(result);
+    expect(wasm.operateOnVectors(vectorA, vectorB, ADD)).toStrictEqual(result);
+    expect(wasm.operateOnVectors(vectorB, vectorA, ADD)).toStrictEqual(result);
 });
 
 test(`Add matrices`, () => {
     const matrixA = from([
         [2, 3, 4],
         [5, 6, 7]
-    ]);
+    ]) as Matrix;
     const matrixB = from([
         [8, 9, 10],
         [11, 12, 13]
-    ]);
+    ]) as Matrix;
     const result = from([
         [10, 12, 14],
         [16, 18, 20]
-    ]);
+    ]) as Matrix;
 
     expect(add(matrixA, matrixB)).toStrictEqual(result);
     expect(add(matrixB, matrixA)).toStrictEqual(result);
@@ -101,12 +101,12 @@ test(`Add matrices`, () => {
         [5, 6, 7, 8]
     ]))).toThrow();
 
-    expect(gpu.operateOnMatrices(matrixA as Matrix, matrixB as Matrix, ADD)).toEqual(result);
-    expect(gpu.operateOnMatrices(matrixB as Matrix, matrixA as Matrix, ADD)).toEqual(result);
-    expect(v8.operateOnMatrices(matrixA as Matrix, matrixB as Matrix, ADD)).toStrictEqual(result);
-    expect(v8.operateOnMatrices(matrixB as Matrix, matrixA as Matrix, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnMatrices(matrixA as Matrix, matrixB as Matrix, ADD)).toStrictEqual(result);
-    expect(wasm.operateOnMatrices(matrixB as Matrix, matrixA as Matrix, ADD)).toStrictEqual(result);
+    expect(gpu.operateOnMatrices(matrixA, matrixB, ADD)).toEqual(result);
+    expect(gpu.operateOnMatrices(matrixB, matrixA, ADD)).toEqual(result);
+    expect(v8.operateOnMatrices(matrixA, matrixB, ADD)).toStrictEqual(result);
+    expect(v8.operateOnMatrices(matrixB, matrixA, ADD)).toStrictEqual(result);
+    expect(wasm.operateOnMatrices(matrixA, matrixB, ADD)).toStrictEqual(result);
+    expect(wasm.operateOnMatrices(matrixB, matrixA, ADD)).toStrictEqual(result);
 });
 
 test(`Add a vector and a matrix`, () => {
