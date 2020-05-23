@@ -20,23 +20,17 @@ export default (
     b: Value,
     operation: ArithmeticOperation
 ): Value => {
-    const [rowsA, columnsA] = shape(a);
-    const [rowsB, columnsB] = shape(b);
+    const [shapeA, shapeB] = [shape(a), shape(b)];
 
-    if (rowsA === 0 && rowsB === 0 && columnsA == 0 && columnsB === 0) {
+    if (shapeA.length === 0 && shapeB.length === 0) {
         // simple number multiplication
         const engine = getBestEngine(1);
 
         return engine.operateOnScalars(a as number, b as number, operation);
     }
 
-    if (rowsA == 0 && columnsA == 0) {
-        // a is either a scalar or an empty array
-        if (Array.isArray(a)) {
-            throw new Error('Cannot operate on empty array');
-        }
-
-        // a is a scalar
+    if (shapeA.length === 0) {
+        // a is a scalar and b is not
         return operateElementWise(
             b as VectorOrMatrix,
             a as number,
@@ -44,13 +38,8 @@ export default (
         );
     }
 
-    if (rowsB == 0 && columnsB == 0) {
-        // b is either a scalar or an empty array
-        if (Array.isArray(b)) {
-            throw new Error('Cannot operate on empty array');
-        }
-
-        // b is a scalar
+    if (shapeB.length === 0) {
+        // b is a scalar and a is not
         return operateElementWise(
             a as VectorOrMatrix,
             b as number,
@@ -70,13 +59,15 @@ const operateOnArrays = (
     b: VectorOrMatrix,
     operation: ArithmeticOperation
 ): VectorOrMatrix => {
-    let [rowsA, columnsA] = shape(a);
-    let [rowsB, columnsB] = shape(b);
+    const [shapeA, shapeB] = [shape(a), shape(b)];
+    let [rowsA, columnsA] = shapeA;
+    let [rowsB, columnsB] = shapeB;
 
     let operandA = a as Matrix;
     let operandB = b as Matrix;
 
-    if (columnsA === columnsB && columnsA === 0) {
+    if (shapeA.length === shapeB.length && shapeA.length === 1) {
+        // we are operating on two vectors
         if (rowsA !== rowsB) {
             throw new Error(`Cannot operate on vectors with incompatible dimensions: ${shape(a)} * ${shape(b)}`);
         }
@@ -86,15 +77,15 @@ const operateOnArrays = (
         return engine.operateOnVectors(a as Vector, b as Vector, operation);
     }
 
-    if (columnsA === 0 && rowsA === columnsB) {
-        // a is a vector
+    if (shapeA.length === 1 && rowsA === columnsB) {
+        // a is a vector and b is a matrix
         // broadcast a to b
         operandA = (b as Matrix).map(() => a as Vector)
         columnsA = rowsA;
         rowsA = rowsB;
     }
-    else if (columnsB === 0 && rowsB === columnsA) {
-        // b is a vector
+    else if (shapeB.length === 1 && rowsB === columnsA) {
+        // b is a vector and a is a matrix
         // broadcast b to a
         operandB = (a as Matrix).map(() => b as Vector)
         columnsB = rowsB;
