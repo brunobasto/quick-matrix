@@ -2,8 +2,10 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+extern "C" {
+
 EMSCRIPTEN_KEEPALIVE
-float operateOnScalars(
+inline float operateOnScalars(
     float a,
     float b,
     int operation)
@@ -47,11 +49,11 @@ float** operateOnMatrixAndScalar(
     int operation,
     bool reverse)
 {
-    float** result = malloc(rows * sizeof(float*));
+    float** result = (float**)malloc(rows * sizeof(float*));
 
     if (reverse) {
         for (int i = 0; i < rows; i++) {
-            result[i] = malloc(columns * sizeof(float));
+            result[i] = (float*)malloc(columns * sizeof(float));
 
             for (int j = 0; j < columns; j++) {
                 result[i][j] = operateOnScalars(scalar, matrix[i][j], operation);
@@ -59,7 +61,7 @@ float** operateOnMatrixAndScalar(
         }
     } else {
         for (int i = 0; i < rows; i++) {
-            result[i] = malloc(columns * sizeof(float));
+            result[i] = (float*)malloc(columns * sizeof(float));
 
             for (int j = 0; j < columns; j++) {
                 result[i][j] = operateOnScalars(matrix[i][j], scalar, operation);
@@ -80,10 +82,10 @@ float** operateOnMatrices(
     int columnsB,
     int operation)
 {
-    float** result = malloc(rowsA * sizeof(float*));
+    float** result = (float**)malloc(rowsA * sizeof(float*));
 
     for (int i = 0; i < rowsA; i++) {
-        result[i] = malloc(columnsA * sizeof(float));
+        result[i] = (float*)malloc(columnsA * sizeof(float));
 
         for (int j = 0; j < columnsA; j++) {
             result[i][j] = operateOnScalars(matrixA[i][j], matrixB[i][j], operation);
@@ -116,4 +118,5 @@ float* operateOnVectorAndScalar(
     float* arrayPtr = &result[0];
 
     return arrayPtr;
+}
 }

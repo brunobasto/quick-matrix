@@ -22,7 +22,7 @@ echo "============================================="
     -s STRICT=1 \
     -s WASM_ASYNC_COMPILATION=0 \
     -o ./native.js \
-    src/c/arithmetic.c
+    src/cpp/arithmetic.cpp
 
   # Create output folder
   mkdir -p wasm
