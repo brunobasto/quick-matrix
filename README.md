@@ -1,4 +1,4 @@
-# quick-matrix - Experiments on matrix algebra with JavaScript
+# quick-matrix - Experiments on matrix algebra API for JavaScript
 
 ```ts
 const vector = from([1, 2, 3]);
