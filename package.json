@@ -19,7 +19,7 @@
 	"scripts": {
 		"benchmark": "yarn build:emscripten && ts-node test/benchmark.ts",
 		"build:emscripten": "docker run --rm -v $(pwd):/src trzeci/emscripten ./build.sh",
-		"build": "build:emscripten && tsc",
+		"build": "yarn build:emscripten && tsc",
 		"test": "yarn build:emscripten && jest"
 	},
 	"jest": {
