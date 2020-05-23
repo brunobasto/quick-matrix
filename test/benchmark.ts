@@ -1,9 +1,10 @@
 import { ArithmeticOperation } from '../src/ts/engines/Engine';
-import { fill, fillVector } from '../src/ts/api/fill';
+import { fill } from '../src/ts/api/fill';
+import { Matrix, Vector } from '../src/ts/types';
+import countdown from 'countdown';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';
 import EngineWASM from '../src/ts/engines/EngineWASM';
-import countdown from 'countdown';
 import shape from '../src/ts/api/shape';
 
 const benchmark = (
@@ -38,14 +39,14 @@ const benchmark = (
     const v8 = new EngineV8();
 
     const scalar = 5;
-    const smallVector = fillVector(10e2, scalar);
-    const mediumVector = fillVector(10e4, scalar);
-    const largeVector = fillVector(10e5, scalar);
-    const smallMatrix = fill([512, 512], scalar);
-    const mediumMatrix = fill([1024, 1024], scalar);
-    const largeMatrix = fill([4096, 4096], scalar);
-    const largeRowsMatrix = fill([16384, 100], scalar);
-    const largeColumnsMatrix = fill([100, 16384], scalar);
+    const smallVector = fill([10e2, 0], scalar) as Vector;
+    const mediumVector = fill([10e4, 0], scalar) as Vector;
+    const largeVector = fill([10e5, 0], scalar) as Vector;
+    const smallMatrix = fill([512, 512], scalar) as Matrix;
+    const mediumMatrix = fill([1024, 1024], scalar) as Matrix;
+    const largeMatrix = fill([4096, 4096], scalar) as Matrix;
+    const largeRowsMatrix = fill([16384, 100], scalar) as Matrix;
+    const largeColumnsMatrix = fill([100, 16384], scalar) as Matrix;
 
     const benchmarkScalarScalar = () => {
         console.log(`=== scalar x scalar ===`);
