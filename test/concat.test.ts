@@ -2,9 +2,8 @@
  * @jest-environment node
  */
 
-import { from } from '../src/ts/api/from';
+import { concat, from } from '../src/ts';
 import { Vector, Matrix } from '../src/ts/types';
-import concat from '../src/ts/api/concat';
 
 const vector = from([1, 2, 3]) as Vector;
 const matrix = from([

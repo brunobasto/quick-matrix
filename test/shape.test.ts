@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { from } from '../src/ts/api/from';
+import { from } from '../src/ts';
 import shape from '../src/ts/api/shape';
 
 test(`shape of number`, () => {

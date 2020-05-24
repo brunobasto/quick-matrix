@@ -1,6 +1,6 @@
 import { Value, Scalar } from "../types";
 
-export const from = (value: any): Value => {
+export default (value: any): Value => {
     if (value instanceof Float32Array) {
         return value;
     }

@@ -1,6 +1,6 @@
 import { Matrix, Vector, VectorOrMatrix } from '../types';
 import shape from './shape';
-import { from } from './from';
+import from from './from';
 
 // Axis 0: Concat rows
 // Axis 1: concat columns

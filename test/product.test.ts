@@ -3,12 +3,11 @@
  */
 
 import { Engine } from '../src/ts/engines/Engine';
-import { from } from '../src/ts/api/from';
+import { from, product } from '../src/ts';
 import { Operation, Matrix } from '../src/ts/types';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';
 import EngineWASM from '../src/ts/engines/EngineWASM';
-import product from '../src/ts/api/product';
 
 const { PRODUCT } = Operation;
 const engines = [new EngineGPU(), new EngineWASM(), new EngineV8()];

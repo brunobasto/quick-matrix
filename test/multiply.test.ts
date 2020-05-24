@@ -2,12 +2,11 @@
  * @jest-environment node
  */
 
-import { from } from '../src/ts/api/from';
+import { from, multiply } from '../src/ts';
 import { Vector, Operation, Matrix } from '../src/ts/types';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';
 import EngineWASM from '../src/ts/engines/EngineWASM';
-import multiply from '../src/ts/api/multiply';
 
 const gpu = new EngineGPU();
 const v8 = new EngineV8();

@@ -3,12 +3,11 @@
  */
 
 import { Engine } from '../src/ts/engines/Engine';
-import { from } from '../src/ts/api/from';
+import { from, transpose } from '../src/ts';
 import { Operation, Matrix } from '../src/ts/types';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';
 import EngineWASM from '../src/ts/engines/EngineWASM';
-import transpose from '../src/ts/api/transpose';
 
 const engines = [new EngineGPU(), new EngineWASM(), new EngineV8()];
 const forEachEngine = (fn: Function) => engines.forEach(engine => fn(engine));

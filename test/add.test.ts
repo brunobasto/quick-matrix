@@ -2,9 +2,8 @@
  * @jest-environment node
  */
 
-import { from } from '../src/ts/api/from';
 import { Vector, Operation, Matrix } from '../src/ts/types';
-import add from '../src/ts/api/add';
+import {add, from} from '../src/ts/';
 import EngineGPU from '../src/ts/engines/EngineGPU';
 import EngineV8 from '../src/ts/engines/EngineV8';
 import EngineWASM from '../src/ts/engines/EngineWASM';
