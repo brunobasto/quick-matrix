@@ -1,7 +1,7 @@
 import { Engine } from './Engine';
 import { GPU } from 'gpu.js';
 import { Matrix, Operation, Vector, Scalar } from '../types';
-import { transpose } from './utils';
+import { transpose, matrixProduct } from './utils';
 import memoize from 'fast-memoize';
 import shape from '../api/shape';
 
@@ -11,6 +11,11 @@ export default class EngineGPU implements Engine {
         b: Matrix,
         operation: Operation
     ): Matrix {
+        // TODO: actually implement using gpu.js
+        if (operation === Operation.PRODUCT) {
+            return matrixProduct(a, b);
+        }
+
         const [rows, columns] = shape(a);
         const operate = makeMatricesKernel(rows, columns);
 

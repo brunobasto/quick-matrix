@@ -14,3 +14,19 @@ export const transpose = (a: Matrix) => {
 
     return result;
 }
+
+export const matrixProduct = (a: Matrix, b: Matrix): Matrix => {
+    const [shapeA, shapeB] = [shape(a), shape(b)];
+    const [[rowsA, columnsA], [rowsB, columnsB]] = [shapeA, shapeB];
+    const result = fill([rowsA, columnsB], 0) as Matrix;
+
+    for (let m = 0; m < rowsA; m++) {
+        for (let n = 0; n < columnsB; n++) {
+            for (let k = 0; k < columnsA; k++) {
+                result[m][n] += a[m][k] * b[k][n];
+            }
+        }
+    }
+
+    return result;
+}

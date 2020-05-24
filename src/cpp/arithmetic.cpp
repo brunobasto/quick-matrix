@@ -149,6 +149,23 @@ float** operateBinaryMatrices(
     int columnsB,
     int operation)
 {
+    // Matrix product
+    if (operation == 6) {
+        float** result = (float**)malloc(rowsA * sizeof(float*));
+
+        for (int m = 0; m < rowsA; m++) {
+            result[m] = (float*)malloc(columnsB * sizeof(float));
+
+            for (int n = 0; n < columnsB; n++) {
+                for (int k = 0; k < rowsB; k++) {
+                    result[m][n] += matrixA[m][k] * matrixB[k][n];
+                }
+            }
+        }
+
+        return result;
+    }
+
     float** result = (float**)malloc(rowsA * sizeof(float*));
 
     for (int i = 0; i < rowsA; i++) {

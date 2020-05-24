@@ -10,6 +10,15 @@ export default class EngineWASM implements Engine {
         b: Matrix,
         operation: Operation
     ): Matrix {
+        let returnShape = shape(a);
+
+        if (operation === Operation.PRODUCT) {
+            const [rowsA,] = returnShape;
+            const [, columnsB] = shape(b);
+
+            returnShape = [rowsA, columnsB];
+        }
+
         return ccallArrays(
             Module,
             `operateBinaryMatrices`,
@@ -17,7 +26,7 @@ export default class EngineWASM implements Engine {
             ['matrix', 'matrix'],
             [a, b, operation],
             {
-                returnShape: shape(a)
+                returnShape
             }
         );
     }

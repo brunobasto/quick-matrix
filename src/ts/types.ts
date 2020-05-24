@@ -13,5 +13,6 @@ export enum Operation {
     MULTIPLY,
     SUBTRACT,
     EXP,
-    TRANSPOSE
+    TRANSPOSE,
+    PRODUCT
 }
