@@ -26,6 +26,7 @@
 		"build": "yarn build:emscripten && tsc",
 		"test": "yarn build:emscripten && jest"
 	},
+	"typings": "./src/ts/typings.d.ts",
 	"jest": {
 		"setupFilesAfterEnv": [
 			"jest-extended"
