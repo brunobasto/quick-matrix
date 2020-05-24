@@ -7,35 +7,54 @@ export default (
 ): [Value, Value] => {
     const [shapeA, shapeB] = [shape(a), shape(b)];
 
-    if (shapeA.length === 0 || shapeB.length === 0) {
-        // operations with a scalar does not need broadcatsing
-        return [a, b]
-    }
-
     let [rowsA, columnsA] = shapeA;
     let [rowsB, columnsB] = shapeB;
 
-    if (shapeA.length === shapeB.length && shapeA.length === 1) {
-        // if we are operating on compatible vectors, no need for broadcasting
+    // if they have the same shape, no need for broadcasting
+    if (rowsA === rowsB && columnsA === columnsB) {
         return [a, b];
     }
 
     let operandA = a as Matrix;
     let operandB = b as Matrix;
 
-    if (shapeA.length === 1 && rowsA === columnsB) {
-        // a is a vector and b is a matrix
-        // broadcast a to b
-        operandA = (b as Matrix).map(() => a as Vector)
-        columnsA = rowsA;
-        rowsA = rowsB;
+    // a is a vector and b is a matrix
+    if (shapeA.length === 1) {
+        // broadcast a to columns of b
+        if (rowsA === columnsB) {
+            operandA = (b as Matrix).map(() => a as Vector);
+            
+            return [operandA, operandB];
+        }
+        // broadcast a to rows of b
+        else if (rowsA === rowsB) {
+            operandA = (b as Matrix).map(
+                (column, i) => column.map(() => a[i])
+            );
+
+            return [operandA, operandB];
+        }
+
+        throw new Error(`Cannot broadcast ${shapeA} and ${shapeB}`);
     }
-    else if (shapeB.length === 1 && rowsB === columnsA) {
-        // b is a vector and a is a matrix
-        // broadcast b to a
-        operandB = (a as Matrix).map(() => b as Vector)
-        columnsB = rowsB;
-        rowsB = rowsA;
+    // b is a vector and a is a matrix
+    else if (shapeB.length === 1) {
+        // broadcast b to columns of a
+        if (rowsB === columnsA) {
+            operandB = (a as Matrix).map(() => b as Vector);
+            
+            return [operandA, operandB];
+        }
+        // broadcast b to rows of a
+        else if (rowsB === rowsA) {
+            operandB = (a as Matrix).map(
+                (column, i) => column.map(() => b[i])
+            );
+
+            return [operandA, operandB];
+        }
+
+        throw new Error(`Cannot broadcast ${shapeA} and ${shapeB}`);
     }
 
     if (columnsA === columnsB) {
@@ -65,7 +84,7 @@ export default (
     }
 
     if (rowsA !== rowsB || columnsA !== columnsB) {
-        throw new Error(`Cannot broadcast: ${shapeA} * ${shapeB}`);
+        throw new Error(`Cannot broadcast: ${shapeA} and ${shapeB}`);
     }
 
     return [operandA, operandB];

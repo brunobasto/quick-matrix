@@ -133,5 +133,5 @@ test(`Multiply a vector and a matrix`, () => {
     ]));
 
     // Incompatible matrix and vvector multiplication must throw an error
-    expect(() => multiply(matrix, from([1, 2]))).toThrow();
+    expect(() => multiply(matrix, from([1, 2, 3, 4]))).toThrow();
 });

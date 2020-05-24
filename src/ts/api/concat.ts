@@ -94,7 +94,7 @@ export default (
     });
 }
 
-const concatVectors = (a: Vector, b: Vector): Vector => {
+export const concatVectors = (a: Vector, b: Vector): Vector => {
     const result = new Float32Array(a.length + b.length);
 
     result.set(a as Vector);

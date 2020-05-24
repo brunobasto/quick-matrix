@@ -163,5 +163,5 @@ test(`Divide a vector and a matrix`, () => {
     ]));
 
     // Incompatible matrix and vvector multiplication must throw an error
-    expect(() => divide(matrix, from([1, 2]))).toThrow();
+    expect(() => divide(matrix, from([1, 2, 3, 4]))).toThrow();
 });

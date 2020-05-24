@@ -137,6 +137,15 @@ test(`Subtract a vector and a matrix`, () => {
         [0, 0, 0],
         [-3, -3, -3]
     ]));
+    expect(subtract(vector, from([
+        [1],
+        [2],
+        [3]
+    ]))).toStrictEqual(from([
+        [0],
+        [0],
+        [0],
+    ]));
     expect(subtract(matrix, vector)).toStrictEqual(from([
         [0, 0, 0],
         [3, 3, 3]
@@ -146,10 +155,6 @@ test(`Subtract a vector and a matrix`, () => {
     expect(subtract(matrix, from([vector]))).toStrictEqual(from([
         [0, 0, 0],
         [3, 3, 3]
-    ]));
-    expect(subtract(from([vector]), matrix)).toStrictEqual(from([
-        [0, 0, 0],
-        [-3, -3, -3]
     ]));
 
     // broadcast columns with dimension 1
@@ -161,7 +166,13 @@ test(`Subtract a vector and a matrix`, () => {
         [0, -1, -2],
         [-2, -3, -4]
     ]));
+    expect(subtract(from([[1], [2], [3]]), vector)).toStrictEqual(from([
+        [0],
+        [0],
+        [0]
+    ]));
 
-    // Incompatible matrix and vvector multiplication must throw an error
-    expect(() => subtract(matrix, from([1, 2]))).toThrow();
+    // Incompatible matrix and vector operation must throw an error
+    expect(() => subtract(matrix, from([1, 2, 3, 4]))).toThrow();
+    expect(() => subtract(from([1, 2, 3, 4]), matrix)).toThrow();
 });
