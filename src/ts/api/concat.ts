@@ -48,7 +48,7 @@ export default (
 
         if (columnsA !== columnsB) {
             throw new Error(
-                `Matrices columns are not compatible`);
+                `concat(): Matrices columns are not compatible`);
         }
 
         return ((a as Matrix).concat(b as Matrix));

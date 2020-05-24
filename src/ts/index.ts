@@ -6,6 +6,7 @@ export {default as from} from './api/from';
 export {default as multiply} from './api/multiply';
 export {default as ones} from './api/ones';
 export {default as product} from './api/product';
+export {default as shape} from './api/shape';
 export {default as subtract} from './api/subtract';
 export {default as transpose} from './api/transpose';
 export {default as zeros} from './api/zeros';
