@@ -5,7 +5,7 @@
 	},
 	"version": "0.0.2",
 	"license": "MIT",
-	"main": "build/index.js",
+	"main": "build/src/ts/index.js",
 	"dependencies": {
 		"fast-memoize": "^2.5.2",
 		"gpu.js": "^2.9.4"
