@@ -34,7 +34,10 @@ test(`Concat vectors`, () => {
     const vectorB = from([5, 6, 7]) as Vector;
 
     expect(concat(vectorA, vectorB)).toStrictEqual(from([2, 3, 4, 5, 6, 7]));
-    expect(concat(vectorB, vectorA)).toStrictEqual(from([5, 6, 7, 2, 3, 4]));
+
+    // Passing axis when both operands are vectors doesn't change the result
+    expect(concat(vectorA, vectorB, 1)).toStrictEqual(from([2, 3, 4, 5, 6, 7]));
+    expect(concat(vectorB, vectorA, 1)).toStrictEqual(from([5, 6, 7, 2, 3, 4]));
 });
 
 test(`Concat matrices`, () => {
@@ -47,6 +50,7 @@ test(`Concat matrices`, () => {
         [11, 12, 13]
     ]) as Matrix;
 
+    // Concat rows
     expect(concat(matrixA, matrixB)).toStrictEqual(from([
         [2, 3, 4],
         [5, 6, 7],
@@ -59,6 +63,8 @@ test(`Concat matrices`, () => {
         [2, 3, 4],
         [5, 6, 7],
     ]));
+
+    // Concat columns
     expect(concat(matrixA, matrixB, 1)).toStrictEqual(from([
         [2, 3, 4, 8, 9, 10],
         [5, 6, 7, 11, 12, 13]
@@ -82,15 +88,29 @@ test(`Concat matrices`, () => {
 });
 
 test(`Concat a vector and a matrix`, () => {
+    // Concat on rows
     expect(concat(vector, matrix)).toStrictEqual(from([
         [1, 2, 3],
         [1, 2, 3],
         [4, 5, 6],
     ]));
+    expect(concat(matrix, vector)).toStrictEqual(from([
+        [1, 2, 3],
+        [4, 5, 6],
+        [1, 2, 3],
+    ]));
+
+    // Concat on columns
     expect(concat(from([11, 12]) as Vector, matrix, 1)).toStrictEqual(from([
         [11, 1, 2, 3],
         [12, 4, 5, 6],
     ]));
+    expect(concat(matrix, from([11, 12]) as Vector, 1)).toStrictEqual(from([
+        [1, 2, 3, 11],
+        [4, 5, 6, 12],
+    ]));
+
+    // Incompatible operations
     expect(() => concat(vector, from([
         [1],
         [2]
@@ -107,13 +127,4 @@ test(`Concat a vector and a matrix`, () => {
         [1],
         [2]
     ]) as Matrix, vector, 1)).toThrow();
-    expect(concat(matrix, vector)).toStrictEqual(from([
-        [1, 2, 3],
-        [4, 5, 6],
-        [1, 2, 3],
-    ]));
-    expect(concat(matrix, from([11, 12]) as Vector, 1)).toStrictEqual(from([
-        [1, 2, 3, 11],
-        [4, 5, 6, 12],
-    ]));
 });
