@@ -27,6 +27,7 @@ echo "============================================="
   # Create output folder
   mkdir -p wasm
   # Move artifacts
+  cp native.wasm build/wasm
   mv native.{js,wasm} wasm
 )
 echo "============================================="
