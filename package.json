@@ -21,6 +21,7 @@
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
+		"prepublish": "yarn build",
 		"benchmark": "yarn build:emscripten && ts-node test/benchmark.ts",
 		"build:emscripten": "docker run --rm -v $(pwd):/src trzeci/emscripten ./build.sh",
 		"build": "yarn build:emscripten && tsc",
