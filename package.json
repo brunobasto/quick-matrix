@@ -3,7 +3,7 @@
 	"repository": {
 		"url": "https://github.com/brunobasto/quick-matrix"
 	},
-	"version": "0.0.10",
+	"version": "0.0.11",
 	"license": "MIT",
 	"main": "build/src/ts/index.js",
 	"dependencies": {
