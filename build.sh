@@ -10,6 +10,7 @@ export CXXFLAGS="${OPTIMIZE}"
 echo "============================================="
 echo "Compiling wasm bindings"
 echo "============================================="
+mkdir -p build/wasm
 (
   # Compile C/C++ code
   emcc \
@@ -22,6 +23,7 @@ echo "============================================="
     -s STRICT=1 \
     -s WASM_ASYNC_COMPILATION=0 \
     -o ./native.js \
+    --no-entry \
     src/cpp/arithmetic.cpp
 
   # Create output folder
